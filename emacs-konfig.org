@@ -52,9 +52,10 @@
 
 ** Platformvalg
 #+BEGIN_SRC emacs-lisp
-  (cond
-   ((string-equal system-type "windows-nt")
-    (taba-computer-init)))
+(cond
+ ((or (string-equal system-type "windows-nt")
+      (string-equal system-type "gnu/linux"))
+  (taba-computer-init)))
 #+END_SRC
 * Org
 #+BEGIN_SRC emacs-lisp
@@ -278,7 +279,7 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (display-time-mode 1)
-(powerline-vim-theme)
+;; (powerline-vim-theme)
 (set-face-font 'default "Source Code Pro")
 (defalias 'yes-or-no-p 'y-or-n-p)
 ;; (global-set-key (kbd "C-h C-f") 'find-function)
