@@ -62,16 +62,16 @@
 (defconst org-worklog-file (concat org-journal-dir "/arbeidslogg.org"))
 (defconst work-dir "~/jobb")
 (defconst repo-dir "~/repos")
-(defconst promo-org-dir (concat repo-dir "/promo/org"))
-(defconst promo-pub-dir (concat repo-dir "/promo"))
-(defconst fysikk1-org-dir (concat repo-dir "/fysikk1/org"))
-(defconst fysikk1-pub-dir (concat repo-dir "/fysikk1"))
-(defconst r1-org-dir (concat repo-dir "/r1/org"))
-(defconst r1-pub-dir (concat repo-dir "/r1"))
+(defconst promo-org-dir (concat repo-dir "/munch/promo/org"))
+(defconst promo-pub-dir (concat repo-dir "/munch/promo"))
+(defconst fysikk1-org-dir (concat repo-dir "/munch/fysikk1/org"))
+(defconst fysikk1-pub-dir (concat repo-dir "/munch/fysikk1"))
+(defconst r1-org-dir (concat repo-dir "/munch/r1/org"))
+(defconst r1-pub-dir (concat repo-dir "/munch/r1"))
 (defconst org-r1-todo-file (concat  r1-org-dir "/r1.org"))
 (defconst org-promo-todo-file (concat  promo-org-dir "/promo.org"))
-(defconst fagdag-2p-org-dir (concat repo-dir "/fagdag-2p"))
-(defconst fagdag-2p-pub-dir (concat repo-dir "/fagdag-2p"))
+(defconst fagdag-2p-org-dir (concat repo-dir "/munch/fagdag-2p"))
+(defconst fagdag-2p-pub-dir (concat repo-dir "/munch/fagdag-2p"))
 (setq-default fill-column 100)
 (setq-default org-tags-column 0)
 (setq recentf-max-menu-items 25)
@@ -432,7 +432,9 @@
 	       :headline-levels 6
 	       :html-preamble nil
 	       :auto-sitemap nil
-	       :exclude "tanker-og-todos.org\\|orgheader.org\\|orgheader_nojs.org\\|sitemap.org"))
+	       :exclude "tanker-og-todos.org\\|orgheader.org\\|orgheader_nojs.org\\|sitemap.org"
+	       :exclude-tags "pdf"))
+
 (add-to-list 'org-publish-project-alist
 	     `("fysikk1"
 	       :base-directory ,fysikk1-org-dir
@@ -493,6 +495,8 @@
  '(fci-rule-color "#d6d6d6" t)
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
  '(fringe-mode nil nil (fringe))
+ '(js2-strict-missing-semi-warning nil)
+ '(magit-branch-read-upstream-first (quote fallback))
  '(magit-dispatch-arguments nil)
  '(magit-remote-arguments (quote ("-f")))
  '(mode-line-format
@@ -507,7 +511,7 @@
  '(nand2tetris-core-base-dir "~/nand2tetris")
  '(org-agenda-files
    (quote
-    ("~/journal/kladd.org" "~/journal/merkedager.org" "~/journal/org/arbeidslogg.org" "~/journal/org/gjøremål.org")))
+    ("~/repos/munch/promo/org/oekter.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/møter.org")))
  '(org-babel-python-command "python")
  '(org-ditaa-jar-option "-jar")
  '(org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0.11.jar")
@@ -626,6 +630,10 @@ edge[fontname=\"Open Sans\"]
  '(package-selected-packages
    (quote
     (darkroom flucui-themes nand2tetris nand2tetris-assembler counsel indium org-plus-contrib pdf-tools ag which-key ob-ipython org helm try use-package htmlize magit)))
+ '(safe-local-variable-values
+   (quote
+    ((org-display-custom-times . t)
+     (org-time-stamp-custom-formats . "<%Y uke %W: %a %e. %m>"))))
  '(text-scale-mode-step 1.1)
  '(vc-annotate-background nil)
  '(vc-annotate-color-map

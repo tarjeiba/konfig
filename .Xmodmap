@@ -1,0 +1,11 @@
+remove Lock = Caps_Lock
+keysym Caps_Lock = Control_L
+add Control = Control_L
+
+# finn keycode med 'showkey --keycodes'
+# etter endringer kan du kjøre 'xmodmap .Xmodmap'
+
+
+keycode 114 = XF86AudioMute       
+keycode 115 = XF86AudioLowerVolume
+keycode 113 = XF86AudioRaiseVolume
