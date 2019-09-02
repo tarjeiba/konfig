@@ -122,7 +122,7 @@
 	  ("k" "Kommentar" item (clock) "%^{Kommentar}" :immediate-finish t)
 	  ("g" "Gjøremål" entry
 	   (file+headline org-todo-file "Gjøremål")
-	   "* TODO %^{Gjøremål}\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t (taba-time-schedule current-prefix-arg)))\n%?"
+	   "* TODO %?"
 	   :empty-lines 1)
 	  ("j" "Journal")
 	  ("jj" "Journal" entry
