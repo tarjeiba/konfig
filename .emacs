@@ -126,7 +126,7 @@
 	   :empty-lines 1)
 	  ("j" "Journal")
 	  ("jj" "Journal" entry
-	   (file+datetree org-journal-file)
+	   (file+olp+datetree org-journal-file)
 	   "* %<%H:%M> %^g\n%?\n  %i\n" :empty-lines 1)
 	  ("jd" "Dagbok" entry
 	   (file+olp org-journal-file "Dagbok")
@@ -260,14 +260,14 @@
 
 
 
-  (setq org-agenda-include-diary t
-	org-agenda-skip-deadline-if-done t
+  (setq	org-agenda-skip-deadline-if-done t
 	org-agenda-skip-scheduled-if-done t
 	org-agenda-skip-timestamp-if-done t
 	org-agenda-window-setup '(current-window)
 	org-src-window-setup '(current-window)
 	org-startup-indented t
-	org-agenda-files (mapcar (lambda (x) (concat org-journal-dir "/" x)) '("journal.org" "gjøremål.org" "møter.org")))
+	org-agenda-files (mapcar (lambda (x) (concat org-journal-dir "/" x))
+				 '("journal.org" "gjøremål.org" "merkedager.org")))
 
   (add-to-list 'org-modules 'org-habit)
 
@@ -284,7 +284,6 @@
   (add-hook 'org-mode-hook 'visual-line-mode)
   (add-hook 'org-mode-hook 'visual-fill-column-mode)
   (add-hook 'org-capture-mode-hook 'delete-other-windows)
-  ;; (add-hook 'org-trigger-hook 'taba-write-journal-on-todo)
 
   (defun taba-org-mode-hook ()
     "Org level heading scaling."
@@ -491,6 +490,10 @@
  '(custom-safe-themes
    (quote
     ("3898b4f9c3f6f2994f5010f766a7f7dac4ee2a5c5eb18c429ab8e71c5dad6947" "896e853cbacc010573cd82b6cf582a45c46abe2e45a2f17b74b4349ff7b29e34" "c9ddf33b383e74dac7690255dd2c3dfa1961a8e8a1d20e401c6572febef61045" "392395ee6e6844aec5a76ca4f5c820b97119ddc5290f4e0f58b38c9748181e8d" "3e335d794ed3030fefd0dbd7ff2d3555e29481fe4bbb0106ea11c660d6001767" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
+ '(display-buffer-alist
+   (quote
+    (("*Async Shell Command*" display-buffer-no-window
+      (nil)))))
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(fci-rule-color "#d6d6d6" t)
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
@@ -511,8 +514,9 @@
  '(nand2tetris-core-base-dir "~/nand2tetris")
  '(org-agenda-files
    (quote
-    ("~/repos/munch/promo/org/oekter.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/møter.org")))
+    ("~/journal/org/journal.org" "~/journal/org/gjøremål.org")))
  '(org-babel-python-command "python")
+ '(org-confirm-babel-evaluate nil)
  '(org-ditaa-jar-option "-jar")
  '(org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0.11.jar")
  '(org-edit-src-turn-on-auto-save t)
