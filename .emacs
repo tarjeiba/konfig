@@ -16,14 +16,6 @@
 
 (desktop-save-mode)
 
-
-;; (use-package flatui-theme
-;;   :ensure t
-;;   :config
-;;   (when (display-graphic-p)
-;;     (load-theme 'flatui t))
-;;     (set-face-attribute 'fringe nil :background nil))
-
 (load-theme 'tb-material t nil)
 
 (setq vc-follow-symlinks t)
