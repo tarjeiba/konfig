@@ -191,15 +191,24 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
 	'(("a" "Avtale" entry
 	   (file+headline org-todo-file "Avtaler")
 	   "* %^{Avtale} %^G\n%^T\n%?\n" :empty-lines 1 :immediate-finish t)
+
 	  ("c" "Klokk inn" entry
 	   (file+olp+datetree org-journal-file "Arbeidslogg")
 	   "* %^{Element} %^G\n"
 	   :clock-in t :clock-keep t :immediate-finish t)
+
 	  ("k" "Kommentar" item (clock) "%^{Kommentar}" :immediate-finish t)
-	  ("g" "Gjøremål" entry
+
+	  ("g" "Gjøremål")
+	  ("gg" "generelt" entry
 	   (file+headline org-todo-file "Gjøremål")
 	   "* TODO %?"
 	   :empty-lines 1)
+	  ("gf" "filspesifikt" entry
+	   (file+olp org-todo-file "Gjøremål" "Filspesifikt")
+	   "* TODO %f -- \n%T\n%a\n\n%?\n%i"
+	   :empty-lines 1)
+
 	  ("j" "Journal")
 	  ("jj" "Journal" entry
 	   (file+olp+datetree org-journal-file)
