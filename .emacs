@@ -200,27 +200,6 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
 	   (file+headline org-todo-file "Gjøremål")
 	   "* TODO %?"
 	   :empty-lines 1)
-	
-	  ("p" "Programmeringsoppgave" entry
-	   (file "~/repos/kikora/programmering/introduksjon.org")
-	   "* %^{Tittel}
-%?
-#+name: %\\2-exercise
-#+begin_src python :session %^{Session} :results silent
-
-#+end_src
-
-#+name: %\\2-skeleton
-#+begin_src python :session %\\2 :results silent
-
-#+end_src
-
-#+name: %\\2-solution
-#+begin_src python :session %\\2 :results silent
-
-#+end_src"
-	   :empty-lines 1 :immediate-finish t)
-
 	  ("j" "Journal")
 	  ("jj" "Journal" entry
 	   (file+olp+datetree org-journal-file)
@@ -229,9 +208,6 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
 	   (file+olp org-journal-file "Dagbok")
 	   "* %<%d.%m.%Y>\n%?\n" :empty-lines 1)))
 
-  (setq org-capture-templates-contexts
-	'(("p" ((in-file . "introduksjon.org")))))
-	
   (org-link-set-parameters
    "ggb"
    :follow (lambda (path)
