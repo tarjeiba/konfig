@@ -24,7 +24,7 @@ URxvt.fading:               0
 ! URxvt.urgentOnBell:         true
 ! URxvt.visualBell:           true
 URxvt.loginShell:           true
-URxvt.saveLines:            50
+URxvt.saveLines:            20000
 URxvt.internalBorder:       30
 URxvt.lineSpace:            0
 
@@ -47,9 +47,10 @@ URxvt.pointerBlank:         true
 
 ! --- special colors ---
 
-*background: #ecf0f1
-*foreground: #2c3e50
-
+! *background: #ecf0f1
+! *foreground: #2c3e50
+*foreground:	#ffffff
+*background:	#263238
 ! Black + DarkGrey
 *color0:  #000000
 *color8:  #555753
