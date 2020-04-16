@@ -16,14 +16,6 @@
 
 (desktop-save-mode)
 
-;; (use-package ivy
-;;   :ensure t
-;;   :bind (("C-x b" . ivy-switch-buffer)
-;; 	 ("C-x 4 b" . ivy-switch-buffer-other-window)
-;; 	 ("M-x" . counsel-M-x)
-;; 	 ("C-x f" . counsel-recentf)
-;; 	 ("C-x C-f" . counsel-find-file))
-;;   :config (ivy-mode))
 
 ;; (use-package flatui-theme
 ;;   :ensure t
