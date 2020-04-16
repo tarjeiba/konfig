@@ -13,9 +13,23 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
-
 (desktop-save-mode)
 
+(use-package counsel
+  :ensure t
+  :bind (("M-x" . counsel-M-x)
+	 ("C-x f" . counsel-recentf)
+	 ("C-x C-f" . counsel-find-file))
+  :config
+  (setq counsel-find-file-ignore-regexp "__pycache__/"))
+
+(use-package ivy :demand
+  :ensure t
+  :bind (("C-x b" . ivy-switch-buffer)
+	 ("C-x 4 b" . ivy-switch-buffer-other-window))
+  :config
+  (ivy-mode))
+  
 (load-theme 'tb-material t nil)
 
 (setq vc-follow-symlinks t)
@@ -599,7 +613,7 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
      (clock-out . ""))))
  '(package-selected-packages
    (quote
-    (mu4e org-protocol evil vterm live-py-mode company-lsp typescript-mode orgit centered-window automargin exwm material-theme arduino-mode arduino flycheck flycheck-mode lsp-ui lsp-mode dired dired-x ob-shell jupyter which-key visual-fill-column use-package try pdf-tools org-plus-contrib magit hungry-delete htmlize helm flatui-theme elpy darkroom counsel ag)))
+    (counsel mu4e org-protocol evil vterm company-lsp typescript-mode orgit exwm material-theme arduino-mode arduino flycheck flycheck-mode lsp-ui dired dired-x ob-shell jupyter which-key visual-fill-column use-package try pdf-tools org-plus-contrib magit htmlize darkroom ag)))
  '(send-mail-function (quote smtpmail-send-it))
  '(tex-fontify-script nil)
  '(vc-follow-symlinks t))
