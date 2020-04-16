@@ -41,7 +41,6 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
 
 (run-at-time (current-time) 300 'recentf-save-list)
 
-
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (setq backup-directory-alist `(("." . "~/media/archive"))
@@ -190,14 +189,16 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
   (setq org-capture-templates
 	'(("a" "Avtale" entry
 	   (file+headline org-todo-file "Avtaler")
-	   "* %^{Avtale} %^G\n%^T\n%?\n" :empty-lines 1 :immediate-finish t)
+	   "* %^{Avtale} %^G\n%^T\n%?\n"
+	   :empty-lines 1 :immediate-finish t)
 
 	  ("c" "Klokk inn" entry
 	   (file+olp+datetree org-journal-file "Arbeidslogg")
 	   "* %^{Element} %^G\n"
 	   :clock-in t :clock-keep t :immediate-finish t)
 
-	  ("k" "Kommentar" item (clock) "%^{Kommentar}" :immediate-finish t)
+	  ("k" "Kommentar" item (clock) "%^{Kommentar}"
+	   :immediate-finish t)
 
 	  ("g" "Gjøremål")
 	  ("gg" "generelt" entry
@@ -211,11 +212,13 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
 
 	  ("j" "Journal")
 	  ("jj" "Journal" entry
-	   (file+olp+datetree org-journal-file)
-	   "* %<%H:%M> %^g\n%?\n  %i\n" :empty-lines 1)
+	   (file+olp+datetree org-journal-file "Journal")
+	   "* %<%H:%M> -- %?\n  %i\n"
+	   :empty-lines 1)
 	  ("jd" "Dagbok" entry
 	   (file+olp org-journal-file "Dagbok")
-	   "* %<%d.%m.%Y>\n%?\n" :empty-lines 1)))
+	   "* %<%d.%m.%Y>\n%?\n"
+	   :empty-lines 1)))
 
   (org-link-set-parameters
    "ggb"
