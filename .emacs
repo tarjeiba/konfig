@@ -572,8 +572,7 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
 	mu4e-drafts-folder "/drafts"
 	mu4e-trash-folder "/trash"
 	mu4e-refile-folder "/archive")
-  (setq mu4e-get-mail-command "offlineimap"
-	mu4e-update-interval 300))
+  (setq mu4e-get-mail-command "offlineimap"))
     
 (setq smtpmail-smtp-server "smtp.purelymail.com"
       smtpmail-smtp-service 587)
