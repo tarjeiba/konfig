@@ -15,6 +15,11 @@
 
 (desktop-save-mode)
 
+(add-to-list 'load-path "~/repos/konfig/el/")
+(add-to-list 'custom-theme-load-path "~/repos/konfig/el/")
+(load-theme 'tb-material t nil)
+
+
 (use-package counsel
   :ensure t
   :bind (("M-x" . counsel-M-x)
@@ -23,14 +28,15 @@
   :config
   (setq counsel-find-file-ignore-regexp "__pycache__/"))
 
-(use-package ivy :demand
+(use-package ivy
   :ensure t
   :bind (("C-x b" . ivy-switch-buffer)
 	 ("C-x 4 b" . ivy-switch-buffer-other-window))
   :config
-  (ivy-mode))
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) "))
   
-(load-theme 'tb-material t nil)
 
 (setq vc-follow-symlinks t)
 (setq inhibit-x-resources t)
@@ -612,7 +618,7 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
      (clock-out . ""))))
  '(package-selected-packages
    (quote
-    (counsel mu4e org-protocol evil vterm company-lsp typescript-mode orgit exwm material-theme arduino-mode arduino flycheck flycheck-mode lsp-ui dired dired-x ob-shell jupyter which-key visual-fill-column use-package try pdf-tools org-plus-contrib magit htmlize darkroom ag)))
+    (orgit counsel mu4e org-protocol evil vterm company-lsp typescript-mode exwm material-theme arduino-mode arduino flycheck flycheck-mode lsp-ui dired dired-x ob-shell jupyter which-key visual-fill-column use-package try pdf-tools org-plus-contrib magit htmlize darkroom ag)))
  '(send-mail-function (quote smtpmail-send-it))
  '(tex-fontify-script nil)
  '(vc-follow-symlinks t))
