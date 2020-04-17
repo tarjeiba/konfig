@@ -568,10 +568,10 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
   :init (setq mu4e-view-use-gnus t)
   :config
   (setq mu4e-maildir "~/media/mail/purely"
-	mu4e-sent-folder "/sent"
-	mu4e-drafts-folder "/drafts"
-	mu4e-trash-folder "/trash"
-	mu4e-refile-folder "/archive")
+	mu4e-sent-folder "/Sent"
+	mu4e-drafts-folder "/Drafts"
+	mu4e-trash-folder "/Trash"
+	mu4e-refile-folder "/Archive")
   (setq mu4e-get-mail-command "offlineimap"))
     
 (setq smtpmail-smtp-server "smtp.purelymail.com"
