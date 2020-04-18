@@ -13,12 +13,10 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
-(desktop-save-mode)
-
 (add-to-list 'load-path "~/repos/konfig/el/")
 (add-to-list 'custom-theme-load-path "~/repos/konfig/el/")
-(load-theme 'tb-material t nil)
 
+(load-theme 'tb-material t nil)
 
 (use-package counsel
   :ensure t
@@ -37,7 +35,6 @@
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) "))
   
-
 (setq vc-follow-symlinks t)
 (setq inhibit-x-resources t)
 
@@ -91,7 +88,9 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
 	 ("C-c n" . org-advance)
 	 ("C-c p" . org-retreat))
 
-  :config 
+  :config
+  (require 'org-mu4e) ; TODO
+  
   (defun tb-org-agenda-list-today-log ()
     (interactive)
     (org-agenda-list 1)
@@ -580,6 +579,7 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
 	mu4e-refile-folder "/Archive")
   (setq mu4e-get-mail-command "offlineimap"))
     
+
 (setq smtpmail-smtp-server "smtp.purelymail.com"
       smtpmail-smtp-service 587)
 
@@ -618,7 +618,7 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
      (clock-out . ""))))
  '(package-selected-packages
    (quote
-    (orgit counsel mu4e org-protocol evil vterm company-lsp typescript-mode exwm material-theme arduino-mode arduino flycheck flycheck-mode lsp-ui dired dired-x ob-shell jupyter which-key visual-fill-column use-package try pdf-tools org-plus-contrib magit htmlize darkroom ag)))
+    (org-mu4e orgit counsel mu4e evil vterm typescript-mode exwm arduino-mode arduino flycheck flycheck-mode dired dired-x ob-shell jupyter which-key visual-fill-column use-package try pdf-tools org-plus-contrib magit htmlize darkroom ag)))
  '(send-mail-function (quote smtpmail-send-it))
  '(tex-fontify-script nil)
  '(vc-follow-symlinks t))
