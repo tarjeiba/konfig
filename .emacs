@@ -45,8 +45,13 @@
 (setq-default fill-column 100
 	      org-tags-column 0)
 
-(setq-default mode-line-format'("%e" mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote mode-line-frame-identification mode-line-buffer-identificati
-on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
+(setq-default mode-line-format '("%e" mode-line-front-space
+				 mode-line-mule-info mode-line-client
+				 mode-line-modified mode-line-remote
+				 mode-line-frame-identification
+				 mode-line-buffer-identification "   "
+				 mode-line-position "   "  "%b"
+				 mode-line-end-spaces))
 
 (setq recentf-max-menu-items 100
       inhibit-startup-screen t
@@ -158,7 +163,7 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
 	      (org-element-property :title (org-element-at-point)))))
       (if (and x (not (string-match file-name-invalid-regexp x)))
 	  (format "%s" x) "yes" )))
-  
+
   (setq org-startup-indented t
 	org-image-actual-width nil
 	org-list-allow-alphabetical t
@@ -222,7 +227,7 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
 	  ("g" "Gjøremål")
 	  ("gg" "generelt" entry
 	   (file+headline org-todo-file "Gjøremål")
-	   "* TODO %?"
+	   "* TODO %?\n%T\n"
 	   :empty-lines 1)
 	  ("gf" "filspesifikt" entry
 	   (file+olp org-todo-file "Gjøremål" "Filspesifikt")
@@ -232,7 +237,7 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
 	  ("j" "Journal")
 	  ("jj" "Journal" entry
 	   (file+olp+datetree org-journal-file "Journal")
-	   "* %<%H:%M> -- %?\n  %i\n"
+	   "* %<%H:%M> -- %?\n%i\n\n\nSkrevet %U"
 	   :empty-lines 1)
 	  ("jd" "Dagbok" entry
 	   (file+olp org-journal-file "Dagbok")
@@ -533,6 +538,7 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
 (add-hook 'dired-load-hook '(lambda () (require 'dired-x)))
 (setq dired-omit-mode t)
 (setq dired-listing-switches "-alh")
+(setq dired-dwim-target t)
 
 
 (defun tob64 (filename)
@@ -603,7 +609,7 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
     ("SCCS" "RCS" "CVS" "MCVS" ".src" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "dist")))
  '(org-agenda-files
    (quote
-    ("~/repos/kikora/programmering/org/gcd.org" "~/repos/kikora/programmering/introduksjon.org" "~/repos/kikora/programmering/org/halveringsmetoden.org" "~/repos/munch/promo/prosjekter.org" "~/repos/munch/promo/promo.org" "~/repos/munch/promo/oekter.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org")))
+    ("~/repos/munch/r2/aarsplan.org" "~/repos/kikora/programmering/org/basis.org" "~/repos/kikora/programmering/org/gcd.org" "~/repos/kikora/programmering/introduksjon.org" "~/repos/kikora/programmering/org/halveringsmetoden.org" "~/repos/munch/promo/prosjekter.org" "~/repos/munch/promo/promo.org" "~/repos/munch/promo/oekter.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org")))
  '(org-log-into-drawer t)
  '(org-log-note-headings
    (quote
@@ -618,7 +624,7 @@ on "   " mode-line-position "   "  "%b" mode-line-end-spaces))
      (clock-out . ""))))
  '(package-selected-packages
    (quote
-    (org-mu4e orgit counsel mu4e evil vterm typescript-mode exwm arduino-mode arduino flycheck flycheck-mode dired dired-x ob-shell jupyter which-key visual-fill-column use-package try pdf-tools org-plus-contrib magit htmlize darkroom ag)))
+    (org-mu4e orgit counsel mu4e org-protocol evil vterm company-lsp typescript-mode exwm material-theme arduino-mode arduino flycheck flycheck-mode lsp-ui dired dired-x ob-shell jupyter which-key visual-fill-column use-package try pdf-tools org-plus-contrib magit htmlize darkroom ag)))
  '(send-mail-function (quote smtpmail-send-it))
  '(tex-fontify-script nil)
  '(vc-follow-symlinks t))
