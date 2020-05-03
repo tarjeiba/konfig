@@ -98,8 +98,9 @@
   
   (defun tb-org-agenda-list-today-log ()
     (interactive)
-    (org-agenda-list 1)
-    (org-agenda-log-mode))
+    (let ((org-agenda-include-inactive-timestamps t))
+      (org-agenda-list 1)
+      (org-agenda-log-mode)))
 
   (defun org-advance ()
     (interactive)
