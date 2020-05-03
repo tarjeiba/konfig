@@ -320,6 +320,14 @@
 	      ((eq backend 'html)
 	       (format "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/%s\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>" path (or desc path))))))
 
+
+
+  (setq org-file-apps '((auto-mode . emacs)
+		       ("\\.mm'" . default)
+		       ("\\.x?html?\\'" . default)
+		       ("\\.pdf\\'" . "zathura %s")
+		       ("\\.pdf::\\([0-9]+\\)\\'" . "zathura -P %1 %s")))
+			
   (setq holiday-bahai-holidays nil
 	holiday-hebrew-holidays nil
 	holiday-islamic-holidays nil
