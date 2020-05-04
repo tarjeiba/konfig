@@ -204,8 +204,10 @@
   (setq org-refile-targets '((nil . (:maxlevel . 2))
 			     (org-agenda-files . (:maxlevel . 2))))
 
-  ;; (setq org-refile-use-outline-path 'file)
-  (setq org-refile-use-outline-path t)
+
+  (setq org-refile-use-outline-path 'file)
+  (setq org-outline-path-complete-in-steps nil)
+
   (add-hook 'org-mode-hook 'visual-line-mode)
   (add-hook 'org-mode-hook 'visual-fill-column-mode)
   (add-hook 'org-capture-mode-hook 'delete-other-windows)
