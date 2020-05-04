@@ -33,7 +33,12 @@
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) "))
+  (setq ivy-count-format "(%d/%d) ")
+  (setq ivy-display-functions-alist
+    '((counsel-irony . ivy-display-function-overlay)
+     (ivy-completion-in-region . ivy-display-function-overlay) ; set to nil for minibuffer
+     (t))))
+
   
 (setq vc-follow-symlinks t)
 (setq inhibit-x-resources t)
