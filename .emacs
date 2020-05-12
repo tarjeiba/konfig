@@ -546,10 +546,6 @@
   :config
   (setq typescript-indent-level 2))
 
-(defun taba-dired-mode-setup ()
-  "to be run as hook for `dired-mode'."
-  (dired-hide-details-mode 1)) 		; kan skrus av/på med "("
-(add-hook 'dired-mode-hook 'taba-dired-mode-setup)
 
 (add-hook 'dired-load-hook '(lambda () (require 'dired-x)))
 (setq dired-omit-mode t)
