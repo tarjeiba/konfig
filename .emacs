@@ -548,7 +548,8 @@
 
 
 (add-hook 'dired-load-hook '(lambda () (require 'dired-x)))
-(setq dired-omit-mode t)
+(setq dired-omit-files
+      (concat dired-omit-files "\\|^\\..+$"))
 (setq dired-listing-switches "-alh")
 (setq dired-dwim-target t)
 
