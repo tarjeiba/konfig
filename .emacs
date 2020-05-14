@@ -137,17 +137,9 @@
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((python . t)
-     (dot . t)
-     (ditaa . t)
-     (C . t)
-     (emacs-lisp . t)
-     (latex . t)
-     (shell . t)
-     (js . t)
-     (scheme . t)
      (jupyter . t)
-     (ruby . t)
-     (lilypond . t)))
+     (dot . t)
+     (emacs-lisp . t)))
 
 
   (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
@@ -173,9 +165,7 @@
   (setq org-startup-indented t
 	org-image-actual-width nil
 	org-list-allow-alphabetical t
-	org-archive-location "~/media/archive/archive.org::* From %s"
-	org-ditaa-jar-option "-jar"
-	org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0.11.jar")
+	org-archive-location "~/media/archive/archive.org::* From %s")
 
   (setq org-babel-python-command "python"
 	org-confirm-babel-evaluate nil
