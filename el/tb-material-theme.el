@@ -50,7 +50,7 @@
  '(minibuffer-prompt ((((class color) (min-colors 89)) (:foreground "#4dd0e1"))))
  '(region ((((class color) (min-colors 89)) (:background "#555555"))))
  '(secondary-selection ((((class color) (min-colors 89)) (:background "#bf616a"))))
- '(header-line ((((class color) (min-colors 89)) (:inherit mode-line :foreground "#b39ddb" :background nil))))
+ '(header-line ((((class color) (min-colors 89)) (:inherit mode-line :foreground nil :background nil :weight bold))))
  '(trailing-whitespace ((((class color) (min-colors 89)) (:foreground "#f36c60" :inverse-video t :underline nil))))
  '(sh-heredoc ((((class color) (min-colors 89)) (:foreground nil :inherit font-lock-string-face :weight normal))))
  '(sh-quoted-exec ((((class color) (min-colors 89)) (:foreground nil :inherit font-lock-preprocessor-face))))
