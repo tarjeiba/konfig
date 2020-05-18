@@ -201,7 +201,7 @@ bar {
 	mode hide
 	hidden_state hide
 	# i3bar shows at num lock
-	modifier mod2
+	modifier mod1+mod4
         status_command i3blocks -c ~/.config/i3/i3blocks.conf
         font pango: Source Code Pro 10
 	position bottom
