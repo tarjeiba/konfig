@@ -203,41 +203,34 @@
   (setq org-refile-use-outline-path 'file)
   (setq org-outline-path-complete-in-steps nil)
 
+
+  (defun org-capture-turn-off-header-line-hook ()
+    (setq-local header-line-format nil))
+
   (add-hook 'org-mode-hook 'visual-line-mode)
   (add-hook 'org-mode-hook 'visual-fill-column-mode)
   (add-hook 'org-capture-mode-hook 'delete-other-windows)
+  (add-hook 'org-capture-mode-hook #'org-capture-turn-off-header-line-hook)
   (add-hook 'org-mode-hook 'taba-org-mode-hook)
-  
+			       
   (setq org-capture-templates
 	'(("a" "Avtale" entry
 	   (file+headline org-todo-file "Avtaler")
 	   "* %^{Avtale} %^G\n%^T\n%?\n"
 	   :empty-lines 1 :immediate-finish t)
-
-	  ("c" "Klokk inn" entry
-	   (file+olp+datetree org-journal-file "Arbeidslogg")
-	   "* %^{Element} %^G\n"
-	   :clock-in t :clock-keep t :immediate-finish t)
-
-	  ("k" "Kommentar" item (clock) "%^{Kommentar}"
-	   :immediate-finish t)
-
-	  ("g" "Gjøremål")
-	  ("gg" "generelt" entry
+	  ("g" "Gjøremål generelt" entry
 	   (file+headline org-todo-file "Gjøremål")
 	   "* TODO %?\n%T\n"
 	   :empty-lines 1)
-	  ("gf" "filspesifikt" entry
+	  ("f" "filspesifikt" entry
 	   (file+olp org-todo-file "Gjøremål" "Filspesifikt")
 	   "* TODO %f -- \n%T\n%a\n\n%?\n%i"
 	   :empty-lines 1)
-
-	  ("j" "Journal")
-	  ("jj" "Journal" entry
+	  ("j" "Journal" entry
 	   (file+olp+datetree org-journal-file "Journal")
-	   "* %<%H:%M> -- %?\n%i\n\n\nSkrevet %U"
+	   "* %<%H:%M> -- %?\n%i\n"
 	   :empty-lines 1)
-	  ("jd" "Dagbok" entry
+	  ("d" "Dagbok" entry
 	   (file+olp org-journal-file "Dagbok")
 	   "* %<%d.%m.%Y>\n%?\n"
 	   :empty-lines 1)))
@@ -612,7 +605,7 @@
     ("SCCS" "RCS" "CVS" "MCVS" ".src" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "dist")))
  '(org-agenda-files
    (quote
-    ("~/repos/munch/r2/aarsplan.org" "~/repos/kikora/programmering/org/basis.org" "~/repos/kikora/programmering/org/gcd.org" "~/repos/kikora/programmering/introduksjon.org" "~/repos/kikora/programmering/org/halveringsmetoden.org" "~/repos/munch/promo/prosjekter.org" "~/repos/munch/promo/promo.org" "~/repos/munch/promo/oekter.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org")))
+    ("~/repos/kikora/programmering/org/basis.org" "~/repos/kikora/programmering/org/gcd.org" "~/repos/kikora/programmering/introduksjon.org" "~/repos/kikora/programmering/org/halveringsmetoden.org" "~/repos/munch/promo/prosjekter.org" "~/repos/munch/promo/promo.org" "~/repos/munch/promo/oekter.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org")))
  '(org-log-into-drawer t)
  '(org-log-note-headings
    (quote
