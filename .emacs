@@ -530,11 +530,13 @@
   (setq typescript-indent-level 2))
 
 
-(add-hook 'dired-load-hook '(lambda () (require 'dired-x)))
-(setq dired-omit-files
+(use-package dired-x
+  :ensure nil
+  :config
+  (setq dired-omit-files
       (concat dired-omit-files "\\|^\\..+$"))
-(setq dired-listing-switches "-alh")
-(setq dired-dwim-target t)
+  (setq dired-listing-switches "-alh")
+  (setq dired-dwim-target t))
 
 
 (defun tob64 (filename)
