@@ -93,19 +93,12 @@
 	 ("C-c c" . org-capture)
 	 ("C-c a" . org-agenda)
 	 ("C-c C-x C-j" . org-clock-goto)
-	 ("C-c A" . tb-org-agenda-list-today-log)
 	 ("C-c s" . taba-org-screenshot)
 	 ("C-c n" . org-advance)
 	 ("C-c p" . org-retreat))
 
   :config
   (require 'org-mu4e) ; TODO
-  
-  (defun tb-org-agenda-list-today-log ()
-    (interactive)
-    (let ((org-agenda-include-inactive-timestamps t))
-      (org-agenda-list 1)
-      (org-agenda-log-mode)))
 
   (defun org-advance ()
     (interactive)
@@ -607,7 +600,7 @@
     ("SCCS" "RCS" "CVS" "MCVS" ".src" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "dist")))
  '(org-agenda-files
    (quote
-    ("~/repos/kikora/programmering/org/basis.org" "~/repos/kikora/programmering/org/gcd.org" "~/repos/kikora/programmering/introduksjon.org" "~/repos/kikora/programmering/org/halveringsmetoden.org" "~/repos/munch/promo/prosjekter.org" "~/repos/munch/promo/promo.org" "~/repos/munch/promo/oekter.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org")))
+    ("~/journal/org/arbeidsflyt.org" "~/journal/org/leseliste.org" "~/repos/kikora/programmering/org/basis.org" "~/repos/kikora/programmering/org/gcd.org" "~/repos/kikora/programmering/introduksjon.org" "~/repos/kikora/programmering/org/halveringsmetoden.org" "~/repos/munch/promo/prosjekter.org" "~/repos/munch/promo/promo.org" "~/repos/munch/promo/oekter.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org")))
  '(org-log-into-drawer t)
  '(org-log-note-headings
    (quote
