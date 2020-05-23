@@ -118,6 +118,7 @@
 
   (defconst org-journal-dir "~/journal/org")
   (defconst org-journal-file (concat org-journal-dir "/journal.org"))
+  (defconst org-diary-file (concat org-journal-dir "/dagbok.org.gpg"))
   (defconst org-todo-file (concat org-journal-dir "/gjøremål.org"))
   (defconst org-worklog-file (concat org-journal-dir "/arbeidslogg.org"))
   (defconst repo-dir "~/repos")
@@ -224,7 +225,7 @@
 	   "* %<%H:%M> -- %?\n%i\n"
 	   :empty-lines 1)
 	  ("d" "Dagbok" entry
-	   (file+olp org-journal-file "Dagbok")
+	   (file org-diary-file)
 	   "* %<%d.%m.%Y>\n%?\n"
 	   :empty-lines 1)))
 
