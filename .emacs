@@ -132,7 +132,6 @@
      (dot . t)
      (emacs-lisp . t)))
 
-
   (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
 						      (:session . "py")
 						      (:tangle . "temp.py")
@@ -193,38 +192,6 @@
 
   (setq org-refile-use-outline-path 'file)
   (setq org-outline-path-complete-in-steps nil)
-
-
-  (defun org-capture-turn-off-header-line-hook ()
-    (setq-local header-line-format nil))
-
-  (add-hook 'org-mode-hook 'visual-line-mode)
-  (add-hook 'org-mode-hook 'visual-fill-column-mode)
-  (add-hook 'org-capture-mode-hook 'delete-other-windows)
-  (add-hook 'org-capture-mode-hook #'org-capture-turn-off-header-line-hook)
-  (add-hook 'org-mode-hook 'taba-org-mode-hook)
-			       
-  (setq org-capture-templates
-	'(("a" "Avtale" entry
-	   (file+headline org-todo-file "Avtaler")
-	   "* %^{Avtale} %^G\n%^T\n%?\n"
-	   :empty-lines 1 :immediate-finish t)
-	  ("g" "Gjøremål generelt" entry
-	   (file+headline org-todo-file "Gjøremål")
-	   "* TODO %?\n%T\n"
-	   :empty-lines 1)
-	  ("f" "filspesifikt" entry
-	   (file+olp org-todo-file "Gjøremål" "Filspesifikt")
-	   "* TODO %f -- \n%T\n%a\n\n%?\n%i"
-	   :empty-lines 1)
-	  ("j" "Journal" entry
-	   (file+olp+datetree org-journal-file "Journal")
-	   "* %<%H:%M> -- %?\n%i\n"
-	   :empty-lines 1)
-	  ("d" "Dagbok" entry
-	   (file org-diary-file)
-	   "* %<%d.%m.%Y>\n%?\n"
-	   :empty-lines 1)))
 
   (org-link-set-parameters
    "ggb"
@@ -338,7 +305,6 @@
 	    (todo "TODO" ((org-agenda-filter-preset '("+jobb"))
 			  (org-agenda-max-entries 0)))))))
 
-
   (defun taba-org-mode-hook ()
     "Org level heading scaling."
     (dolist (face '(org-level-1
@@ -347,6 +313,10 @@
 		    org-level-4
 		    org-level-5))
       (set-face-attribute face nil :weight 'semi-bold :height 1.0)))
+
+  (add-hook 'org-mode-hook 'visual-line-mode)
+  (add-hook 'org-mode-hook 'visual-fill-column-mode)
+  (add-hook 'org-mode-hook 'taba-org-mode-hook)
 
   (defun taba-org-screenshot (arg)
     "Take a screenshot into a time stamped unique-named file in the
@@ -365,6 +335,37 @@
 	  (call-process "import" nil nil nil filename)) ; imagemagick
       (insert (concat "[[file:" filename "]]")))))
 
+(use-package org-capture
+  :ensure nil
+  :after org
+  :custom
+  (org-capture-templates
+   `(("a" "Avtale" entry
+      (file+headline org-todo-file "Avtaler")
+      "* %^{Avtale} %^G\n%^T\n%?\n"
+      :empty-lines 1 :immediate-finish t)
+     ("g" "Gjøremål generelt" entry
+      (file+headline org-todo-file "Gjøremål")
+      "* TODO %?\n%T\n"
+      :empty-lines 1)
+     ("f" "filspesifikt" entry
+      (file+olp org-todo-file "Gjøremål" "Filspesifikt")
+      "* TODO %f -- \n%T\n%a\n\n%?\n%i"
+      :empty-lines 1)
+     ("j" "Journal" entry
+      (file+olp+datetree org-journal-file "Journal")
+      "* %^{Tema}\n%i\n%?\n\nSkrevet %U."
+      :empty-lines 1)
+     ("d" "Dagbok" entry
+      (file org-diary-file)
+      "* %<%d.%m.%Y>\n%?\n"
+      :empty-lines 1)
+     ))
+  :config
+  (defun org-capture-turn-off-header-line-hook ()
+    (setq-local header-line-format nil))
+  (add-hook 'org-capture-mode-hook 'delete-other-windows)
+  (add-hook 'org-capture-mode-hook #'org-capture-turn-off-header-line-hook))
 
 (use-package ol-git-link
   :after org)
