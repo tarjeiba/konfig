@@ -516,6 +516,11 @@
 (use-package vterm
   :ensure t)
 
+(use-package js2-mode
+  :ensure t
+  :config
+  (setq javascript-indent-level 2))
+
 (use-package typescript-mode
   :ensure t
   :config
@@ -606,7 +611,7 @@
     ("SCCS" "RCS" "CVS" "MCVS" ".src" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "dist")))
  '(org-agenda-files
    (quote
-    ("~/journal/org/arbeidsflyt.org" "~/journal/org/leseliste.org" "~/repos/kikora/programmering/org/basis.org" "~/repos/kikora/programmering/org/gcd.org" "~/repos/kikora/programmering/introduksjon.org" "~/repos/kikora/programmering/org/halveringsmetoden.org" "~/repos/munch/promo/prosjekter.org" "~/repos/munch/promo/promo.org" "~/repos/munch/promo/oekter.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org")))
+    ("~/munch/promo/oekter.org" "~/munch/munch.org" "~/journal/org/munch.org" "~/temp/fagsamtaler-karakterer.org.gpg" "~/journal/org/arbeidsflyt.org" "~/journal/org/leseliste.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org")))
  '(org-log-into-drawer t)
  '(org-log-note-headings
    (quote
@@ -621,7 +626,7 @@
      (clock-out . ""))))
  '(package-selected-packages
    (quote
-    (org-mu4e orgit counsel mu4e org-protocol evil vterm company-lsp typescript-mode exwm material-theme arduino-mode arduino flycheck flycheck-mode lsp-ui dired dired-x ob-shell jupyter which-key visual-fill-column use-package try pdf-tools org-plus-contrib magit htmlize darkroom ag)))
+    (js2-mode js-mode javascript-mode org-mu4e orgit counsel mu4e vterm typescript-mode exwm arduino-mode arduino flycheck flycheck-mode dired dired-x ob-shell jupyter which-key visual-fill-column use-package pdf-tools org-plus-contrib magit htmlize darkroom ag)))
  '(send-mail-function (quote smtpmail-send-it))
  '(tex-fontify-script nil)
  '(vc-follow-symlinks t))
