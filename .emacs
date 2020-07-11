@@ -530,7 +530,9 @@
   (setq dired-omit-files
       (concat dired-omit-files "\\|^\\..+$"))
   (setq dired-listing-switches "-alh")
-  (setq dired-dwim-target t))
+  (setq dired-dwim-target t)
+  (setq dired-omit-mode t)
+  (add-hook 'dired-mode-hook (lambda () (dired-omit-mode))))
 
 
 (defun tob64 (filename)
