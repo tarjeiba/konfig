@@ -98,8 +98,6 @@
 	 ("C-c p" . org-retreat))
 
   :config
-  (require 'org-mu4e) ; TODO
-
   (defun org-advance ()
     (interactive)
     (when (buffer-narrowed-p)
@@ -575,12 +573,17 @@
 	mu4e-sent-folder "/Sent"
 	mu4e-drafts-folder "/Drafts"
 	mu4e-trash-folder "/Trash"
-	mu4e-refile-folder "/Archive")
+	mu4e-refile-folder "/Archive"
+	mu4e-update-interval 1800)
   (setq mu4e-get-mail-command "offlineimap"))
     
+(use-package org-mu4e
+  :ensure nil)
 
 (setq smtpmail-smtp-server "smtp.purelymail.com"
       smtpmail-smtp-service 587)
+
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
