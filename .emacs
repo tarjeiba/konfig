@@ -18,28 +18,6 @@
 
 (load-theme 'tb-material t nil)
 
-(use-package counsel
-  :ensure t
-  :bind (("M-x" . counsel-M-x)
-	 ("C-x f" . counsel-recentf)
-	 ("C-x C-f" . counsel-find-file))
-  :config
-  (setq counsel-find-file-ignore-regexp "__pycache__/"))
-
-(use-package ivy
-  :ensure t
-  :bind (("C-x b" . ivy-switch-buffer)
-	 ("C-x 4 b" . ivy-switch-buffer-other-window))
-  :config
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) ")
-  (setq ivy-display-functions-alist
-    '((counsel-irony . ivy-display-function-overlay)
-     (ivy-completion-in-region . ivy-display-function-overlay) ; set to nil for minibuffer
-     (t))))
-
-  
 (setq vc-follow-symlinks t)
 (setq inhibit-x-resources t)
 
@@ -86,6 +64,28 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (display-time-mode 1)
+
+(use-package counsel
+  :ensure t
+  :bind (("M-x" . counsel-M-x)
+	 ("C-x f" . counsel-recentf)
+	 ("C-x C-f" . counsel-find-file))
+  :custom
+  (counsel-find-file-ignore-regexp "__pycache__/"))
+
+(use-package ivy
+  :ensure t
+  :bind (("C-x b" . ivy-switch-buffer)
+	 ("C-x 4 b" . ivy-switch-buffer-other-window))
+  :custom
+  (ivy-use-virtual-buffers t)
+  (ivy-count-format "(%d/%d) ")
+  (ivy-display-functions-alist
+    '((counsel-irony . ivy-display-function-overlay)
+     (ivy-completion-in-region . ivy-display-function-overlay) ; set to nil for minibuffer
+     (t)))
+  :config
+  (ivy-mode 1))
 
 (use-package org
   :ensure t
