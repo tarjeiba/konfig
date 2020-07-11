@@ -121,11 +121,10 @@
   (defconst org-diary-file (concat org-journal-dir "/dagbok.org.gpg"))
   (defconst org-todo-file (concat org-journal-dir "/gjøremål.org"))
   (defconst org-worklog-file (concat org-journal-dir "/arbeidslogg.org"))
-  (defconst repo-dir "~/repos")
-  (defconst promo-org-dir (concat repo-dir "/munch/promo"))
-  (defconst promo-pub-dir (concat repo-dir "/munch/promo"))
-  (defconst skaperverkstedet-org-dir (concat repo-dir "/munch/skaperverkstedet/org"))
-  (defconst skaperverkstedet-pub-dir (concat repo-dir "/munch/skaperverkstedet"))
+  (defconst promo-org-dir "~/munch/promo")
+  (defconst promo-pub-dir "~/munch/promo")
+  (defconst skaperverkstedet-org-dir "~/munch/skaperverkstedet/org")
+  (defconst skaperverkstedet-pub-dir "~/munch/skaperverkstedet")
   (defconst org-promo-todo-file (concat  promo-org-dir "/promo.org"))
 
   (org-babel-do-load-languages
