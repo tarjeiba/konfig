@@ -229,4 +229,3 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute s
 
 exec xinput set-prop 14 281 1 # for å sette touchpad tap til å være klikk
 exec --no-startup-id xsetroot -solid '$basebg'
-exec qjackctl
