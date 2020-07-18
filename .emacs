@@ -611,7 +611,7 @@
     ("SCCS" "RCS" "CVS" "MCVS" ".src" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "dist")))
  '(org-agenda-files
    (quote
-    ("~/munch/promo/oekter.org" "~/munch/munch.org" "~/journal/org/munch.org" "~/temp/fagsamtaler-karakterer.org.gpg" "~/journal/org/arbeidsflyt.org" "~/journal/org/leseliste.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org")))
+    ("~/munch/r2/r2.org" "~/munch/munch.org" "~/journal/org/munch.org" "~/temp/fagsamtaler-karakterer.org.gpg" "~/journal/org/arbeidsflyt.org" "~/journal/org/leseliste.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org")))
  '(org-log-into-drawer t)
  '(org-log-note-headings
    (quote
