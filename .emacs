@@ -290,7 +290,15 @@
 	calendar-day-name-array ["søndag" "mandag" "tirsdag" "onsdag" "torsdag" "fredag" "lørdag"]
 	calendar-month-name-array ["januar" "februar" "mars" "april"
                                  "mai" "juni" "juli" "august"
-                                 "september" "oktober" "november" "desember"])
+                                 "september" "oktober" "november" "desember"]
+
+	calendar-intermonth-text 
+	'(propertize
+	  (format "%2d"
+		  (car
+		   (calendar-iso-from-absolute
+		    (calendar-absolute-from-gregorian (list month day year)))))
+	  'font-lock-face 'font-lock-function-name-face))
 
   (setq org-agenda-custom-commands
 	'(("h" "Agenda og hjemme"
