@@ -375,6 +375,16 @@
   (add-hook 'org-capture-mode-hook 'delete-other-windows)
   (add-hook 'org-capture-mode-hook #'org-capture-turn-off-header-line-hook))
 
+(use-package org-ref
+  :ensure t
+  :after org
+  :config
+  (setq reftex-default-bibliography '("~/journal/org/bibliografi.bib"))
+
+  (setq org-ref-bibliography-notes "~/journal/org/bibliografi.org"
+	org-ref-default-bibliography '("~/journal/org/bibliografi.bib")
+	org-ref-pdf-directory "~/documents/"))
+
 (use-package ol-git-link
   :after org)
 
@@ -493,7 +503,6 @@
 					   "<hr>\n"
 					   "<div id=\"text-footnotes\">\n"
 					   "%s\n</div>\n</div>")))
- 
 
 (use-package magit
   :ensure t
@@ -545,6 +554,13 @@
   (setq dired-omit-mode t)
   (add-hook 'dired-mode-hook (lambda () (dired-omit-mode))))
 
+(use-package pdf-tools
+  :ensure t
+  :config
+  (pdf-tools-install)
+  (setq pdf-view-midnight-colors (cons (face-attribute 'default :foreground)
+				       (face-attribute 'default :background)))
+  (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode))
 
 (defun tob64 (filename)
   (base64-encode-string
@@ -619,7 +635,7 @@
     ("SCCS" "RCS" "CVS" "MCVS" ".src" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "dist")))
  '(org-agenda-files
    (quote
-    ("~/munch/r2/r2.org" "~/munch/munch.org" "~/journal/org/munch.org" "~/temp/fagsamtaler-karakterer.org.gpg" "~/journal/org/arbeidsflyt.org" "~/journal/org/leseliste.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org")))
+    ("~/journal/org/bibliografi.org" "~/munch/r2/r2.org" "~/munch/musikkteknologi/musikkteknologi.org" "~/munch/munch.org" "~/journal/org/arbeidsflyt.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org")))
  '(org-log-into-drawer t)
  '(org-log-note-headings
    (quote
@@ -634,7 +650,7 @@
      (clock-out . ""))))
  '(package-selected-packages
    (quote
-    (js2-mode js-mode javascript-mode org-mu4e orgit counsel mu4e vterm typescript-mode exwm arduino-mode arduino flycheck flycheck-mode dired dired-x ob-shell jupyter which-key visual-fill-column use-package pdf-tools org-plus-contrib magit htmlize darkroom ag)))
+    (org-ref js2-mode js-mode javascript-mode org-mu4e orgit counsel mu4e vterm typescript-mode exwm arduino-mode arduino flycheck flycheck-mode dired dired-x ob-shell jupyter which-key visual-fill-column use-package pdf-tools org-plus-contrib magit htmlize darkroom ag)))
  '(send-mail-function (quote smtpmail-send-it))
  '(tex-fontify-script nil)
  '(vc-follow-symlinks t))
