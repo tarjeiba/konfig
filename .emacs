@@ -146,14 +146,6 @@
   (add-to-list 'org-structure-template-alist '("p" . "src python"))
   (add-to-list 'org-structure-template-alist '("b" . "src bibtex"))
 
-  (defun headline-title() 
-    (let* ((x 
-	    (save-mark-and-excursion 
-	      (org-up-heading-safe) 
-	      (org-element-property :title (org-element-at-point)))))
-      (if (and x (not (string-match file-name-invalid-regexp x)))
-	  (format "%s" x) "yes" )))
-
   (setq org-startup-indented t
 	org-image-actual-width nil
 	org-list-allow-alphabetical t
