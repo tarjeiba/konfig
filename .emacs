@@ -138,11 +138,13 @@
 						      (:kernel . "python3")
 						      (:eval . "never-export")
 						      (:exports . "both")))
+
   (org-babel-jupyter-override-src-block "python")
 
   (setq org-babel-min-lines-for-block-output 1)
 
   (add-to-list 'org-structure-template-alist '("p" . "src python"))
+  (add-to-list 'org-structure-template-alist '("b" . "src bibtex"))
 
   (defun headline-title() 
     (let* ((x 
