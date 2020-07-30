@@ -356,7 +356,7 @@
       :empty-lines 1)
      ("j" "Journal" entry
       (file+olp+datetree org-journal-file "Journal")
-      "* %^{Tema}\n%i\n%?\n\nSkrevet %U."
+      "* %^{Tema}\n%i%?\n\nSkrevet %U."
       :empty-lines 1)
      ("d" "Dagbok" entry
       (file org-diary-file)
@@ -527,10 +527,10 @@
 (use-package vterm
   :ensure t)
 
-(use-package js2-mode
+(use-package js
   :ensure t
   :config
-  (setq javascript-indent-level 2))
+  (setq js-indent-level 2))
 
 (use-package typescript-mode
   :ensure t
