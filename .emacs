@@ -498,6 +498,9 @@
 					   "<div id=\"text-footnotes\">\n"
 					   "%s\n</div>\n</div>")))
 
+(use-package ledger-mode
+  :ensure t)
+
 (use-package magit
   :ensure t
   :bind ("C-x g" . magit-status)
@@ -627,9 +630,15 @@
  '(grep-find-ignored-directories
    (quote
     ("SCCS" "RCS" "CVS" "MCVS" ".src" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "dist")))
+ '(ledger-reports
+   (quote
+    (("bal" "ledger [[ledger-mode-flags]] -f /home/tarjei/journal/pengejournal.dat bal")
+     ("reg" "%(binary) -f %(ledger-file) reg")
+     ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
+     ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
  '(org-agenda-files
    (quote
-    ("~/journal/org/bibliografi.org" "~/munch/r2/r2.org" "~/munch/musikkteknologi/musikkteknologi.org" "~/munch/munch.org" "~/journal/org/arbeidsflyt.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org")))
+    ("~/kikora/kikora.org" "~/journal/org/bibliografi.org" "~/munch/r2/r2.org" "~/munch/musikkteknologi/musikkteknologi.org" "~/munch/munch.org" "~/journal/org/arbeidsflyt.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org")))
  '(org-log-into-drawer t)
  '(org-log-note-headings
    (quote
@@ -644,7 +653,7 @@
      (clock-out . ""))))
  '(package-selected-packages
    (quote
-    (org-ref js2-mode js-mode javascript-mode org-mu4e orgit counsel mu4e vterm typescript-mode exwm arduino-mode arduino flycheck flycheck-mode dired dired-x ob-shell jupyter which-key visual-fill-column use-package pdf-tools org-plus-contrib magit htmlize darkroom ag)))
+    (ledger-mode org-ref org-mu4e orgit counsel mu4e vterm typescript-mode exwm arduino-mode arduino flycheck flycheck-mode dired dired-x ob-shell jupyter which-key visual-fill-column use-package pdf-tools org-plus-contrib magit htmlize darkroom ag)))
  '(send-mail-function (quote smtpmail-send-it))
  '(tex-fontify-script nil)
  '(vc-follow-symlinks t))
