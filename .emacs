@@ -307,18 +307,8 @@
 	    (todo "TODO" ((org-agenda-filter-preset '("+jobb"))
 			  (org-agenda-max-entries 0)))))))
 
-  (defun taba-org-mode-hook ()
-    "Org level heading scaling."
-    (dolist (face '(org-level-1
-		    org-level-2
-		    org-level-3
-		    org-level-4
-		    org-level-5))
-      (set-face-attribute face nil :weight 'semi-bold :height 1.0)))
-
   (add-hook 'org-mode-hook 'visual-line-mode)
   (add-hook 'org-mode-hook 'visual-fill-column-mode)
-  (add-hook 'org-mode-hook 'taba-org-mode-hook)
 
   (defun taba-org-screenshot (arg)
     "Take a screenshot into a time stamped unique-named file in the
