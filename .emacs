@@ -310,22 +310,18 @@
   (add-hook 'org-mode-hook 'visual-line-mode)
   (add-hook 'org-mode-hook 'visual-fill-column-mode)
 
-  (defun taba-org-screenshot (arg)
-    "Take a screenshot into a time stamped unique-named file in the
-	    same directory as the org-buffer and insert a link to this file."
-    (interactive "P")
-    (let* ((folder "./figurer/")
-	   (filestub (if arg
-			 (read-string "Bildenavn (uten .png): ")
-		       (concat (file-name-base buffer-file-name) "_"
-			       (format-time-string "%Y%m%d_%H%M%S"))))
-	   (filename (concat folder filestub ".png")))
-      (message filename)
-      (if (eq system-type 'windows-nt)
-	  (call-process "boxcutter" nil nil nil filename)) ; forutsetter boxcutter http://keepnote.org/boxcutter/
-      (if (eq system-type 'gnu/linux)
-	  (call-process "import" nil nil nil filename)) ; imagemagick
-      (insert (concat "[[file:" filename "]]")))))
+  (defun taba-org-screenshot ()
+    "Take a screenshot into a time-stamped uniquely named file
+
+The screenshot is saved as an attachment."
+    (interactive)
+    (let* ((folder "/tmp/")
+	   (filename (concat "screenshot_"
+			     (format-time-string "%Y%m%d_%H%M%S")
+			     ".png"))
+	   (fullname (concat folder filename)))
+      (call-process "import" nil nil nil fullname)
+      (org-attach-attach fullname nil 'mv))))
 
 (use-package org-capture
   :ensure nil
