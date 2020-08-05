@@ -377,7 +377,12 @@
 
   (setq org-ref-bibliography-notes "~/journal/org/bibliografi.org"
 	org-ref-default-bibliography '("~/journal/org/bibliografi.bib")
-	org-ref-pdf-directory "~/documents/"))
+	org-ref-pdf-directory "~/documents/")
+
+  (setq org-ref-completion-library 'org-ref-ivy-bibtex)
+  (setq org-ref-insert-cite-function 'org-ref-ivy-insert-cite-link)
+
+  (bibtex-set-dialect))  ; see https://emacs.stackexchange.com/questions/46691/initialization-of-bibtex-package2
 
 (use-package ol-git-link
   :after org)
@@ -638,7 +643,7 @@
      ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
  '(org-agenda-files
    (quote
-    ("~/kikora/kikora.org" "~/journal/org/bibliografi.org" "~/munch/r2/r2.org" "~/munch/musikkteknologi/musikkteknologi.org" "~/munch/munch.org" "~/journal/org/arbeidsflyt.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org")))
+    ("~/munch/r2/r2.org" "~/munch/promo/promo.org" "~/munch/skaperverkstedet/skaperverkstedet.org" "~/kikora/kikora.org" "~/journal/org/bibliografi.org" "~/munch/musikkteknologi/musikkteknologi.org" "~/munch/munch.org" "~/journal/org/arbeidsflyt.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org")))
  '(org-log-into-drawer t)
  '(org-log-note-headings
    (quote
@@ -651,6 +656,9 @@
      (deldeadline . "Removed deadline, was %S on %t")
      (refile . "Refiled on %t")
      (clock-out . ""))))
+ '(org-ref-clean-bibtex-entry-hook
+   (quote
+    (org-ref-bibtex-format-url-if-doi orcb-key-comma orcb-& orcb-% org-ref-title-case-article orcb-clean-year orcb-key orcb-clean-doi orcb-clean-pages orcb-check-journal org-ref-sort-bibtex-entry orcb-fix-spacing)))
  '(package-selected-packages
    (quote
     (ledger-mode org-ref org-mu4e orgit counsel mu4e vterm typescript-mode exwm arduino-mode arduino flycheck flycheck-mode dired dired-x ob-shell jupyter which-key visual-fill-column use-package pdf-tools org-plus-contrib magit htmlize darkroom ag)))
