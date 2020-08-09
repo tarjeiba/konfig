@@ -4,14 +4,6 @@
 
 set $mod Mod4
 
-# set $basefg    #2c3e50
-# set $basebg    #ecf0f1
-# set $basefi    #7f8c8d
-# set $moerkgraa #7f8c8d
-# set $moerkblaa	#34495e
-# set $purple	#8e44ad
-# set $blaa	#2492db
-
 set $basefg	#ffffff
 set $basebg	#263238
 set $modeline   #1c1f26
@@ -45,7 +37,6 @@ set $up k
 set $down j
 set $left h
 set $right l
-
 
 # change focus
 bindsym $mod+$left focus left
@@ -198,7 +189,7 @@ bar {
         # status_command i3status
 	mode hide
 	hidden_state hide
-	# i3bar shows at num lock
+	# i3bar shows at alt + win
 	modifier mod1+mod4
         status_command i3blocks -c ~/.config/i3/i3blocks.conf
         font pango: Source Code Pro 10
@@ -216,7 +207,6 @@ bar {
     }
 }
 
-
 # Misc.
 focus_follows_mouse no
 
@@ -225,5 +215,5 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #i
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
-exec xinput set-prop 14 281 1 # for å sette touchpad tap til å være klikk
+exec xinput set-prop 14 281 1 # touchpad tap is click
 exec --no-startup-id xsetroot -solid '$basebg'
