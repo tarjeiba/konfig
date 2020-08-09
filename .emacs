@@ -149,7 +149,8 @@
   (setq org-startup-indented t
 	org-image-actual-width nil
 	org-list-allow-alphabetical t
-	org-archive-location "~/media/archive/archive.org::* From %s")
+	org-archive-location "~/media/archive/%s_archive::"
+	org-archive-file-header-format nil)
 
   (setq org-babel-python-command "python"
 	org-confirm-babel-evaluate nil
@@ -186,6 +187,9 @@
 
   (setq org-refile-use-outline-path 'file)
   (setq org-outline-path-complete-in-steps nil)
+
+  (setq org-id-link-to-org-use-id t)
+
 
   (org-link-set-parameters
    "ggb"
