@@ -34,8 +34,6 @@ bindsym $mod+Shift+x exec i3lock -c '$basebg'
 bindsym $mod+Print --release exec import ~/media/screenshots/region-`date +%Y%m%d_%H%M%S`.png
 bindsym Print --release exec import -window root -crop 1920x1080 ~/media/screenshots/screen-`date +%Y%m%d_%H%M%S`.png
 
-bindsym $mod+Shift+s exec screencast
-
 # start dmenu
 # bindsym $mod+d exec dmenu_run -fn 'Source Code Pro-14' -sb '$moerkblaa' -nb '$basebg' -nf '$basefg'
 bindsym $mod+d exec dmenu_run -fn 'Source Code Pro-12' -sb '$modeline' -nb '$basebg' -nf '$basefg'
