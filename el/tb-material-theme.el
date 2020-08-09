@@ -1,6 +1,8 @@
 (deftheme tb-material
   "Created 2020-01-01.")
 
+(defvar contrast "#b3e5fc")
+
 (custom-theme-set-variables
  'tb-material
  '(package-selected-packages (quote (exwm material-theme arduino-mode arduino flycheck flycheck-mode lsp-ui lsp-mode dired dired-x ob-shell jupyter which-key visual-fill-column use-package try pdf-tools org-plus-contrib magit hungry-delete htmlize helm flatui-theme elpy darkroom counsel ag)))
@@ -21,14 +23,14 @@
  '(font-lock-comment-face ((((class color) (min-colors 89)) (:foreground "#b0bec5"))))
  '(font-lock-constant-face ((((class color) (min-colors 89)) (:foreground "#8bc34a"))))
  '(font-lock-doc-face ((((class color) (min-colors 89)) (:foreground "moccasin"))))
- '(font-lock-function-name-face ((((class color) (min-colors 89)) (:foreground "#84ffff"))))
+ `(font-lock-function-name-face ((((class color) (min-colors 89)) (:foreground ,contrast))))
  '(font-lock-keyword-face ((((class color) (min-colors 89)) (:foreground "#fff59d"))))
  '(font-lock-negation-char-face ((((class color) (min-colors 89)) (:foreground "#4dd0e1"))))
  '(font-lock-preprocessor-face ((((class color) (min-colors 89)) (:foreground "gold"))))
  '(font-lock-regexp-grouping-backslash ((((class color) (min-colors 89)) (:foreground "#fff59d"))))
  '(font-lock-regexp-grouping-construct ((((class color) (min-colors 89)) (:foreground "#b39ddb"))))
  '(font-lock-string-face ((((class color) (min-colors 89)) (:foreground "#9ccc65"))))
- '(font-lock-type-face ((((class color) (min-colors 89)) (:foreground "#84ffff"))))
+ `(font-lock-type-face ((((class color) (min-colors 89)) (:foreground ,contrast))))
  '(font-lock-variable-name-face ((((class color) (min-colors 89)) (:foreground "#ffcc80"))))
  '(font-lock-warning-face ((((class color) (min-colors 89)) (:weight bold :foreground "#f36c60"))))
  '(shadow ((((class color) (min-colors 89)) (:foreground "#b0bec5"))))
@@ -47,7 +49,7 @@
  '(mode-line-inactive ((((class color) (min-colors 89)) (:inherit mode-line :foreground "#a7adba" :background "#1c1f26" :weight normal :box nil))))
  '(mode-line-emphasis ((((class color) (min-colors 89)) (:foreground "#ffffff" :slant italic))))
  '(mode-line-highlight ((((class color) (min-colors 89)) (:foreground "#b39ddb" :box nil))))
- '(minibuffer-prompt ((((class color) (min-colors 89)) (:foreground "#4dd0e1"))))
+ `(minibuffer-prompt ((((class color) (min-colors 89)) (:foreground ,contrast))))
  '(region ((((class color) (min-colors 89)) (:background "#555555"))))
  '(secondary-selection ((((class color) (min-colors 89)) (:background "#bf616a"))))
  '(header-line ((((class color) (min-colors 89)) (:inherit mode-line :foreground nil :background nil :weight bold))))
@@ -76,8 +78,8 @@
  '(which-key-command-description-face ((((class color) (min-colors 89)) (:foreground "#ffffff"))))
  '(which-key-group-description-face ((((class color) (min-colors 89)) (:foreground "#81d4fa"))))
  '(which-key-separator-face ((((class color) (min-colors 89)) (:foreground "#b0bec5"))))
- '(org-agenda-structure ((((class color) (min-colors 89)) (:foreground "#81d4fa" :bold t))))
- '(org-agenda-date ((((class color) (min-colors 89)) (:foreground "#4dd0e1" :underline nil))))
+ `(org-agenda-structure ((((class color) (min-colors 89)) (:foreground ,contrast :bold t))))
+ `(org-agenda-date ((((class color) (min-colors 89)) (:foreground ,contrast :underline nil))))
  '(org-agenda-done ((((class color) (min-colors 89)) (:foreground "#8bc34a"))))
  '(org-agenda-dimmed-todo-face ((((class color) (min-colors 89)) (:foreground "#b0bec5"))))
  '(org-block ((((class color) (min-colors 89)) (:foreground "#ffffff"))));
@@ -86,7 +88,7 @@
  '(org-column-title ((((class color) (min-colors 89)) (:inherit org-column :weight bold :underline t))))
  '(org-date ((((class color) (min-colors 89)) (:foreground "#80cbc4" :underline t))))
  '(org-document-info ((((class color) (min-colors 89)) (:foreground "#81d4fa" :height 1.35))))
- '(org-document-info-keyword ((((class color) (min-colors 89)) (:foreground "#8bc34a" :height 1.35))))
+ `(org-document-info-keyword ((((class color) (min-colors 89)) (:foreground ,contrast :height 1.35))))
  '(org-document-title ((((class color) (min-colors 89)) (:weight bold :foreground "#ffffff" :height 1.35))))
  '(org-done ((((class color) (min-colors 89)) (:foreground "#8bc34a" :bold t :background "#1b5e20"))))
  '(org-ellipsis ((((class color) (min-colors 89)) (:foreground "#b0bec5"))))
