@@ -93,7 +93,6 @@
 	 ("C-c c" . org-capture)
 	 ("C-c a" . org-agenda)
 	 ("C-c C-x C-j" . org-clock-goto)
-	 ("C-c s" . taba-org-screenshot)
 	 ("C-c n" . org-advance)
 	 ("C-c p" . org-retreat))
 
@@ -312,8 +311,15 @@
 			  (org-agenda-max-entries 0)))))))
 
   (add-hook 'org-mode-hook 'visual-line-mode)
-  (add-hook 'org-mode-hook 'visual-fill-column-mode)
+  (add-hook 'org-mode-hook 'visual-fill-column-mode))
 
+(use-package org-attach
+  :ensure nil
+  :after org
+  :bind (("C-c s" . taba-org-screenshot))
+  :config
+
+  (setq org-attach-expert t)
   (defun taba-org-screenshot ()
     "Take a screenshot into a time-stamped uniquely named file
 
