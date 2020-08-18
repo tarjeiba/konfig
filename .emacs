@@ -151,6 +151,8 @@
 	org-archive-location "~/media/archive/%s_archive::"
 	org-archive-file-header-format nil)
 
+  (setq org-clock-persist t)
+
   (setq org-babel-python-command "python"
 	org-confirm-babel-evaluate nil
 	org-indent-indentation-per-level 2
