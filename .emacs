@@ -382,9 +382,6 @@ The screenshot is saved as an attachment."
 
   (bibtex-set-dialect))  ; see https://emacs.stackexchange.com/questions/46691/initialization-of-bibtex-package2
 
-(use-package ol-git-link
-  :after org)
-
 (use-package orgit
   :ensure t
   :after (org magit))
