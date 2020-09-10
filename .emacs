@@ -82,13 +82,14 @@
   (ivy-count-format "(%d/%d) ")
   (ivy-display-functions-alist
     '((counsel-irony . ivy-display-function-overlay)
-     (ivy-completion-in-region . ivy-display-function-overlay) ; set to nil for minibuffer
+      (ivy-completion-in-region . nil) ; set to nil for minibuffer
      (t)))
   :config
   (ivy-mode 1))
 
 (use-package org
   :ensure t
+  :load-path "~/repos/org-mode/lisp"
   :bind (("C-c l" . org-store-link)
 	 ("C-c c" . org-capture)
 	 ("C-c a" . org-agenda)
@@ -379,6 +380,7 @@ The screenshot is saved as an attachment."
 
   (setq org-ref-completion-library 'org-ref-ivy-bibtex)
   (setq org-ref-insert-cite-function 'org-ref-ivy-insert-cite-link)
+  (org-ref-ivy-cite-completion)
 
   (bibtex-set-dialect))  ; see https://emacs.stackexchange.com/questions/46691/initialization-of-bibtex-package2
 
