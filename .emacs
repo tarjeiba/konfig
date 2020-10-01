@@ -65,6 +65,11 @@
 (scroll-bar-mode -1)
 (display-time-mode 1)
 
+(set-register ?e '(file . "~/.emacs"))
+(set-register ?j '(file . "~/journal/org/journal.org"))
+(set-register ?p '(file . "~/journal/org/pengejournal.org"))
+
+
 (use-package counsel
   :ensure t
   :bind (("M-x" . counsel-M-x)
