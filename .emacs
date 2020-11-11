@@ -55,6 +55,8 @@
       kept-old-versions 2
       version-control t)
 
+(setq auto-save-file-name-transforms `((".*" "~/media/emacs-autosaves/" t)))
+
 (setq display-buffer-alist 
       '(("*Async Shell Command*" display-buffer-no-window)))
 
@@ -67,7 +69,7 @@
 
 (set-register ?e '(file . "~/.emacs"))
 (set-register ?j '(file . "~/journal/org/journal.org"))
-(set-register ?p '(file . "~/journal/org/pengejournal.org"))
+(set-register ?p '(file . "~/journal/pengejournal.dat"))
 
 
 (use-package counsel
