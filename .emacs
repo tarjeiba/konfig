@@ -57,6 +57,9 @@
 
 (setq auto-save-file-name-transforms `((".*" "~/media/emacs-autosaves/" t)))
 
+(setq create-lockfiles nil)
+
+
 (setq display-buffer-alist 
       '(("*Async Shell Command*" display-buffer-no-window)))
 
