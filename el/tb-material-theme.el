@@ -13,7 +13,7 @@
 (custom-theme-set-faces
  'tb-material
  '(fringe ((((class color) (min-colors 89)) (:background "#263238"))))
- '(jupyter-repl-input-prompt ((t (:foreground "dark green"))))
+ '(jupyter-repl-input-prompt ((t (:foreground "#9ccc65"))))
  '(bold ((((class color) (min-colors 89)) (:weight bold))))
  '(bold-italic ((((class color) (min-colors 89)) (:slant italic :weight bold))))
  '(underline ((((class color) (min-colors 89)) (:underline t))))

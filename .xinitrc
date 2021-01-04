@@ -36,5 +36,10 @@ twm &
 # unclutter --ignore-scrolling &
 xclock -geometry 50x50-1+1 &
 udiskie --no-notify &
+
+# setup of wacom tablet
+xsetwacom --set "Wacom Intuos BT Pen stylus" Button 2 "pan"
+xsetwacom --set "Wacom Intuos BT Pen stylus" "PanScrollThreshold" 100
+
 exec i3
 #exec emacs

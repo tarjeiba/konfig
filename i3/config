@@ -1,13 +1,16 @@
+
 # i3 config file (v4)
 
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
 
-set $basefg	#ffffff
-set $basebg	#263238
-set $modeline   #1c1f26
-set $basefi	#b0bec5
+set $basefg		#ffffff
+set $basebg		#263238
+set $modeline		#1c1f26
+set $asefi		#b0bec5
+set $highlightorange	#ff9800
+set $varnameorange      #ffcc80
 
 font pango:System San Fransisco Display 14
 
@@ -16,6 +19,8 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
+for_window [class="URxvt" instance="floating"] floating enable
+bindsym $mod+Shift+Return exec urxvt -name floating
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -24,12 +29,16 @@ bindsym $mod+Shift+q kill
 bindsym $mod+Shift+x exec i3lock -c '$basebg'
 
 bindsym $mod+Print --release exec import ~/media/screenshots/region-`date +%Y%m%d_%H%M%S`.png
+bindsym $mod+Shift+S  --release exec import png:- | xclip -selection c -t image/png
 bindsym Print --release exec import -window root -crop 1920x1080 ~/media/screenshots/screen-`date +%Y%m%d_%H%M%S`.png
 
 # start dmenu
 # bindsym $mod+d exec dmenu_run -fn 'Source Code Pro-14' -sb '$moerkblaa' -nb '$basebg' -nf '$basefg'
 bindsym $mod+d exec dmenu_run -fn 'Source Code Pro-12' -sb '$modeline' -nb '$basebg' -nf '$basefg'
 bindsym $mod+Shift+d exec passmenu -fn 'Source Code Pro-12' -sb '$modeline' -nb '$basebg' -nf '$basefg'
+
+# screencast
+bindsym $mod+Shift+c exec screencast
 
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
@@ -68,6 +77,17 @@ bindsym $mod+Ctrl+j move workspace to output down
 bindsym $mod+Ctrl+k move workspace to output up
 bindsym $mod+Ctrl+l move workspace to output right
 
+workspace 1 output HDMI-2 eDP-1
+workspace 2 output HDMI-2 eDP-1
+workspace 3 output HDMI-2 eDP-1
+workspace 4 output HDMI-2 eDP-1
+workspace 5 output HDMI-2 eDP-1
+workspace 6 output eDP-1 HDMI-2 
+workspace 7 output eDP-1 HDMI-2 
+workspace 8 output eDP-1 HDMI-2 
+workspace 9 output eDP-1 HDMI-2 
+workspace 10 output eDP-1 HDMI-b2 
+
 # split in horizontal orientation
 bindsym $mod+i split h
 
@@ -96,7 +116,7 @@ bindsym $mod+a focus parent
 
 # # toggle borders on/off
 bindsym $mod+b border toggle
-default_border pixel 5
+default_border pixel 2
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -135,8 +155,8 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
+# # reload the configuration file
+# bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
@@ -171,7 +191,7 @@ bindsym $mod+r mode "resize"
 
 # Widow Colours
 #                       border  background text    indicator
-client.focused          $modeline $modeline "#ffffff" $modeline
+client.focused          $highlightorange $modeline "#ffffff" $modeline $asefi
 client.focused_inactive $basebg $basebg $basefi $basebg
 client.unfocused        $basebg $basebg $basefi $basefi
 client.urgent           $basebg $basebg $basefi $basebg
