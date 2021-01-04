@@ -37,6 +37,7 @@
 				 mode-line-end-spaces))
 
 (setq recentf-max-menu-items 100
+      recentf-max-saved-items 100
       inhibit-startup-screen t
       inhibit-splash-screen t
       initial-scratch-message nil
@@ -44,7 +45,10 @@
       column-number-mode t
       ediff-window-setup-function 'ediff-setup-windows-plain)
 
-(run-at-time (current-time) 300 'recentf-save-list)
+(run-at-time (current-time) (* 5 60)
+             (lambda ()
+               (let ((save-silently t))
+                 (recentf-save-list))))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -74,7 +78,6 @@
 (set-register ?j '(file . "~/journal/org/journal.org"))
 (set-register ?p '(file . "~/journal/pengejournal.dat"))
 
-
 (use-package counsel
   :ensure t
   :bind (("M-x" . counsel-M-x)
@@ -92,7 +95,7 @@
   (ivy-count-format "(%d/%d) ")
   (ivy-display-functions-alist
     '((counsel-irony . ivy-display-function-overlay)
-      (ivy-completion-in-region . nil) ; set to nil for minibuffer
+      (ivy-completion-in-region . nil) ; set to ivy-display-function-overlay for drop-down
      (t)))
   :config
   (ivy-mode 1))
@@ -129,18 +132,19 @@
   (defconst org-diary-file (concat org-journal-dir "/dagbok.org.gpg"))
   (defconst org-todo-file (concat org-journal-dir "/gjøremål.org"))
   (defconst org-worklog-file (concat org-journal-dir "/arbeidslogg.org"))
-  (defconst promo-org-dir "~/munch/promo")
-  (defconst promo-pub-dir "~/munch/promo")
+  (defconst promo-org-dir "~/munch/pmx")
+  (defconst promo-pub-dir "~/munch/pmx")
   (defconst skaperverkstedet-org-dir "~/munch/skaperverkstedet/org")
   (defconst skaperverkstedet-pub-dir "~/munch/skaperverkstedet")
-  (defconst org-promo-todo-file (concat  promo-org-dir "/promo.org"))
+  (defconst org-promo-todo-file (concat  promo-org-dir "/pmx.org"))
 
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((python . t)
-     (jupyter . t)
      (dot . t)
-     (emacs-lisp . t)))
+     (emacs-lisp . t)
+     (jupyter . t)
+     (lilypond . t)))
 
   (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
 						      (:session . "py")
@@ -155,6 +159,7 @@
 
   (add-to-list 'org-structure-template-alist '("p" . "src python"))
   (add-to-list 'org-structure-template-alist '("b" . "src bibtex"))
+  (add-to-list 'org-modules 'org-habit t)
 
   (setq org-startup-indented t
 	org-image-actual-width nil
@@ -167,6 +172,7 @@
   (setq org-babel-python-command "python"
 	org-confirm-babel-evaluate nil
 	org-indent-indentation-per-level 2
+	org-adapt-indentation nil
 	org-src-fontify-natively t
 	org-src-preserve-indentation t
 	org-src-tab-acts-natively t
@@ -199,8 +205,6 @@
 
   (setq org-refile-use-outline-path 'file)
   (setq org-outline-path-complete-in-steps nil)
-
-  (setq org-id-link-to-org-use-id t)
 
 
   (org-link-set-parameters
@@ -359,17 +363,13 @@ The screenshot is saved as an attachment."
       (file+headline org-todo-file "Gjøremål")
       "* TODO %?\n%T\n"
       :empty-lines 1)
-     ("f" "filspesifikt" entry
-      (file+olp org-todo-file "Gjøremål" "Filspesifikt")
-      "* TODO %f -- \n%T\n%a\n\n%?\n%i"
-      :empty-lines 1)
      ("j" "Journal" entry
       (file+olp+datetree org-journal-file "Journal")
-      "* %^{Tema}\n%i%?\n\nSkrevet %U."
-      :empty-lines 1)
+      "* %^{Tema} %^g\n%i%?\n\nSkrevet %U."
+      :empty-lines 1 :immediate-finish t :jump-to-captured t)
      ("d" "Dagbok" entry
       (file org-diary-file)
-      "* %<%d.%m.%Y>\n%?\n"
+      "* %<%d.%m.%Y> -- %?\n\n"
       :empty-lines 1)
      ))
   :config
@@ -530,11 +530,11 @@ The screenshot is saved as an attachment."
   :ensure t
   :config (which-key-mode t))
 
-(use-package fill-column-indicator
-  :ensure t
-  :config
-  (setq fci-rule-color "#d6d6d6"
-	fci-rule-width 1))
+;; (use-package fill-column-indicator
+;;   :ensure t
+;;   :config
+;;   (setq fci-rule-color "#d6d6d6"
+;; 	fci-rule-width 1))
 
 (use-package arduino-mode
   :ensure t)
@@ -552,6 +552,15 @@ The screenshot is saved as an attachment."
   :config
   (setq typescript-indent-level 2))
 
+(use-package lsp-mode
+  :ensure t)
+
+(use-package lsp-ivy
+  :ensure t)
+  
+
+(use-package lua-mode
+  :ensure t)
 
 (use-package dired-x
   :ensure nil
@@ -561,12 +570,21 @@ The screenshot is saved as an attachment."
   (setq dired-listing-switches "-alh")
   (setq dired-dwim-target t)
   (setq dired-omit-mode t)
-  (add-hook 'dired-mode-hook (lambda () (dired-omit-mode))))
+  (add-hook 'dired-mode-hook (lambda () (dired-omit-mode)))
+  (setq dired-guess-shell-alist-user
+      '(("\\.pdf$" "zathura")
+        ("\\.flv$" "mpv")
+        ("\\.mov$" "mpv")
+        ("\\.3gp$" "mpv")
+        ("\\.png$" "feh")
+        ("\\.jpg$" "feh")
+        ("\\.JPG$" "feh")
+        ("\\.avi$" "mpv"))))
 
 (use-package pdf-tools
   :ensure t
   :config
-  (pdf-tools-install)
+  (pdf-tools-install :no-query)
   (setq pdf-view-midnight-colors (cons (face-attribute 'default :foreground)
 				       (face-attribute 'default :background)))
   (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode))
@@ -619,10 +637,32 @@ The screenshot is saved as an attachment."
 (use-package org-mu4e
   :ensure nil)
 
+(use-package writeroom-mode
+  :ensure t)
+
 (setq smtpmail-smtp-server "smtp.purelymail.com"
       smtpmail-smtp-service 587)
 
 
+(use-package haskell-mode
+  :ensure t)
+
+ ;; (use-package emms
+ ;;  :ensure t
+ ;;  :config
+ ;;  (require 'emms-setup)
+ ;;  (emms-minimalistic)
+ ;;  (setq emms-player-list '(emms-player-mpv)))
+
+
+ ;;  (emms-default-players)
+ ;;  (setq emms-source-file-default-directory "~/media/musikk/")
+ ;;  (setq emms-playlist-buffer-name "*Music*")
+ ;;  (setq emms-info-asynchronously t)
+ ;;  (require 'emms-info-libtag) ;;; load functions that will talk to emms-print-metadata which in turn talks to libtag and gets metadata
+ ;;  (setq emms-info-functions '(emms-info-libtag)) ;;; make sure libtag is the only thing delivering metadata
+ ;;  (require 'emms-playing-time)
+ ;;  (emms-playing-time 1))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -632,29 +672,24 @@ The screenshot is saved as an attachment."
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
  '(ansi-color-names-vector
-   (quote
-    (vector "#ffffff" "#f36c60" "#8bc34a" "#fff59d" "#4dd0e1" "#b39ddb" "#81d4fa" "#263238")))
+   '(vector "#ffffff" "#f36c60" "#8bc34a" "#fff59d" "#4dd0e1" "#b39ddb" "#81d4fa" "#263238"))
  '(custom-safe-themes
-   (quote
-    ("bf511364b090a19300634da43adb41144180e3c7926a4b0097155a8b33c1f6f2" "a8ad2c75696c9b97b59372c92aec60fee9059b3e9dafb8888c5ce0b64362f584" "732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "fe5e8725280cd104da1ee0488d88f896628f509cd17ecfdf54741ba63d52eff1" "f3fb21a7e3695c47631c5c488b2c70fa488ea42ab2525460698a5df18e925d80" "b554a4750d2ed87c2ecf97eea9ef7ad4e413324e3b273632552ee2489bda74b5" "4b934e6ec7a295c1af3ea0a194d38b54a3b93e4edb8a9fe957ed12076bc32dce" "883f6d34c0bac676833397f4b4d9ef1f98df2b566fe95bddb1da88bb08fe7245" "1b1c04792dae7e9cebc27aa5aa3ba7516250b440364a8d08cc03aff566032387" "ee11d22f12ee5113edf2b81738d027125b9e38d926ee8f61ea577b47a1330233" "1a5f3ceefb834fad698866ce5606de03cd9a9af13e66b351b86d94367a305d7b" "bf798e9e8ff00d4bf2512597f36e5a135ce48e477ce88a0764cfb5d8104e8163" "c9ddf33b383e74dac7690255dd2c3dfa1961a8e8a1d20e401c6572febef61045" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
+   '("72e0b2fcc58a2bc2cfe588b27853f7dea7db6d2bda7d481e1e348b5a15f69a18" "bf511364b090a19300634da43adb41144180e3c7926a4b0097155a8b33c1f6f2" "a8ad2c75696c9b97b59372c92aec60fee9059b3e9dafb8888c5ce0b64362f584" "732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "fe5e8725280cd104da1ee0488d88f896628f509cd17ecfdf54741ba63d52eff1" "f3fb21a7e3695c47631c5c488b2c70fa488ea42ab2525460698a5df18e925d80" "b554a4750d2ed87c2ecf97eea9ef7ad4e413324e3b273632552ee2489bda74b5" "4b934e6ec7a295c1af3ea0a194d38b54a3b93e4edb8a9fe957ed12076bc32dce" "883f6d34c0bac676833397f4b4d9ef1f98df2b566fe95bddb1da88bb08fe7245" "1b1c04792dae7e9cebc27aa5aa3ba7516250b440364a8d08cc03aff566032387" "ee11d22f12ee5113edf2b81738d027125b9e38d926ee8f61ea577b47a1330233" "1a5f3ceefb834fad698866ce5606de03cd9a9af13e66b351b86d94367a305d7b" "bf798e9e8ff00d4bf2512597f36e5a135ce48e477ce88a0764cfb5d8104e8163" "c9ddf33b383e74dac7690255dd2c3dfa1961a8e8a1d20e401c6572febef61045" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default))
  '(fci-rule-color "#37474f")
- '(gnus-group-tool-bar (quote gnus-group-tool-bar-gnome))
+ '(gnus-group-tool-bar 'gnus-group-tool-bar-gnome)
  '(grep-find-ignored-directories
-   (quote
-    ("SCCS" "RCS" "CVS" "MCVS" ".src" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "dist")))
+   '("SCCS" "RCS" "CVS" "MCVS" ".src" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "dist"))
  '(ledger-reports
-   (quote
-    (("bal" "ledger [[ledger-mode-flags]] -f /home/tarjei/journal/pengejournal.dat bal")
+   '(("bal" "ledger [[ledger-mode-flags]] -f /home/tarjei/journal/pengejournal.dat bal")
      ("reg" "%(binary) -f %(ledger-file) reg")
      ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
-     ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
+     ("account" "%(binary) -f %(ledger-file) reg %(account)")))
  '(org-agenda-files
-   (quote
-    ("~/munch/r2/r2.org" "~/munch/promo/promo.org" "~/munch/skaperverkstedet/skaperverkstedet.org" "~/kikora/kikora.org" "~/journal/org/bibliografi.org" "~/munch/musikkteknologi/musikkteknologi.org" "~/munch/munch.org" "~/journal/org/arbeidsflyt.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org")))
+   '("~/munch/pmx/fysikkmotor/fysikkmotor.org" "~/journal/org/bibliografi.org" "~/journal/org/jensbjelkes.org" "~/journal/org/fjellgata.org" "~/munch/tekfors/tekfors.org" "~/munch/skaperverkstedet/skaperverkstedet.org" "~/munch/r2/r2.org" "~/munch/pmx/pmx.org" "~/kikora/kikora.org" "~/munch/munch.org" "~/journal/org/arbeidsflyt.org" "~/journal/org/journal.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org"))
+ '(org-id-link-to-org-use-id 'create-if-interactive)
  '(org-log-into-drawer t)
  '(org-log-note-headings
-   (quote
-    ((done . "CLOSING NOTE %t")
+   '((done . "CLOSING NOTE %t")
      (state . "State %-12s from %-12S %t")
      (note . "%t")
      (reschedule . "Rescheduled from %S on %t")
@@ -662,14 +697,12 @@ The screenshot is saved as an attachment."
      (redeadline . "New deadline from %S on %t")
      (deldeadline . "Removed deadline, was %S on %t")
      (refile . "Refiled on %t")
-     (clock-out . ""))))
+     (clock-out . "")))
  '(org-ref-clean-bibtex-entry-hook
-   (quote
-    (org-ref-bibtex-format-url-if-doi orcb-key-comma orcb-& orcb-% org-ref-title-case-article orcb-clean-year orcb-key orcb-clean-doi orcb-clean-pages orcb-check-journal org-ref-sort-bibtex-entry orcb-fix-spacing)))
+   '(org-ref-bibtex-format-url-if-doi orcb-key-comma orcb-& orcb-% org-ref-title-case-article orcb-clean-year orcb-key orcb-clean-doi orcb-clean-pages orcb-check-journal org-ref-sort-bibtex-entry orcb-fix-spacing))
  '(package-selected-packages
-   (quote
-    (ledger-mode org-ref org-mu4e orgit counsel mu4e vterm typescript-mode exwm arduino-mode arduino flycheck flycheck-mode dired dired-x ob-shell jupyter which-key visual-fill-column use-package pdf-tools org-plus-contrib magit htmlize darkroom ag)))
- '(send-mail-function (quote smtpmail-send-it))
+   '(lua-mode centered-window-mode lsp-ivy ivy-lsp emms ox-ipynb writeroom-mode writeroom ledger-mode org-ref org-mu4e orgit counsel mu4e vterm typescript-mode exwm arduino-mode arduino flycheck flycheck-mode dired dired-x ob-shell jupyter which-key visual-fill-column use-package pdf-tools org-plus-contrib magit htmlize darkroom ag))
+ '(send-mail-function 'smtpmail-send-it)
  '(tex-fontify-script nil)
  '(vc-follow-symlinks t))
 
@@ -680,3 +713,4 @@ The screenshot is saved as an attachment."
  ;; If there is more than one, they won't work right.
  '(subscript ((t (:height tex-suscript-height))))
  '(tex-verbatim ((t (:background "dark grey")))))
+(put 'magit-edit-line-commit 'disabled nil)
