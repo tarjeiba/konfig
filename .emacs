@@ -283,13 +283,22 @@
 	       (format "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/%s\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>" path (or desc path))))))
 
 
+  (org-link-set-parameters
+   "inkscape"
+   :follow (lambda (path)
+	     (shell-command
+	      (format "inkscape ../inkscape/%s &" path)))
+   :export (lambda (path desc backend)
+	     (async-shell-command (format "inkscape --export-plain-svg --export-filename=../svg/%s ../inkscape/%s" path path))
+	     (format "<figure>\n<img src=\"svg/%s\"/></figure>" path)))
 
   (setq org-file-apps '((auto-mode . emacs)
-		       ("\\.mm'" . default)
-		       ("\\.x?html?\\'" . default)
-		       ("\\.pdf\\'" . "zathura %s")
-		       ("\\.pdf::\\([0-9]+\\)\\'" . "zathura -P %1 %s")))
-			
+			("\\.mm'" . default)
+			("\\.x?html?\\'" . default)
+			("\\.pdf\\'" . "zathura %s")
+			("\\.pdf::\\([0-9]+\\)\\'" . "zathura -P %1 %s")
+			("\\.xopp" . "xournalpp %s")))
+
   (setq holiday-bahai-holidays nil
 	holiday-hebrew-holidays nil
 	holiday-islamic-holidays nil
