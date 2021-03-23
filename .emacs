@@ -461,8 +461,46 @@ The screenshot is saved as an attachment."
 	   :base-extension "css"
 	   :publishing-directory ,skaperverkstedet-pub-dir
 	   :publishing-function org-publish-attachment)
+
+	  ("konturer-org"
+	   :base-directory "~/repos/konturer/org"
+	   :base-extension "org"
+	   :publishing-directory "~/repos/konturer"
+	   :publishing-function my-org-html-publish-to-html
+	   :exclude: "konturer_header.org")
+
+	  ("konturer-static"
+	   :base-directory "~/repos/konturer/org"
+	   :base-extension "gif"
+	   :publishing-directory "~/repos/konturer"
+	   :recursive t
+	   :publishing-function org-publish-attachment)
+
+	  ("konturer"
+	   :components ("konturer-org"))
 	  ))
 
+
+  (add-to-list 'org-src-lang-modes '("svgjs" . javascript))
+  (defvar org-babel-default-header-args:svgjs
+    '((:results . "html")
+      (:exports . "results")))
+
+  (defun org-babel-execute:svgjs (body _params)
+    (message "start")
+    (message (format "I am %s" (nth 4 (org-babel-get-src-block-info))))
+    (format "<script type=\"text/javascript\">\n%s\n</script>" body))
+
+  (customize-set-variable 'org-babel-exp-code-template
+			  (concat "\n=%name=:\n"
+				  org-babel-exp-code-template))
+
+
+
+;; https://svgjs.com/docs/3.0/getting-started/
+;; https://cdnjs.com/libraries/svg.js
+;; https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-js.html
+;; https://emacs.stackexchange.com/questions/28301/export-javascript-source-block-to-script-tag-in-html-when-exporting-org-file-to
   (defun tarjeiba-read-file-contents (filename)
     (with-temp-buffer
       (insert-file-contents filename)
