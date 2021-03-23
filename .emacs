@@ -290,7 +290,18 @@
 	      (format "inkscape ../inkscape/%s &" path)))
    :export (lambda (path desc backend)
 	     (async-shell-command (format "inkscape --export-plain-svg --export-filename=../svg/%s ../inkscape/%s" path path))
-	     (format "<figure>\n<img src=\"svg/%s\"/></figure>" path)))
+	     (format "<figure>\n<img src=\"svg/%s\"></figure>" path)))
+
+  (org-link-set-parameters
+   "xopp"
+   :follow (lambda (path)
+	     (async-shell-command
+	      (format "xournalpp ../xopp/%s.xopp" path)))
+   :export (lambda (path desc backend)
+	     (async-shell-command (format "xournalpp --create-img ../svg/%s.svg ../xopp/%s.xopp" path path))
+	     (format "<figure>\n<img src=\"svg/%s.svg\"/></figure>" path)))
+))
+
 
   (setq org-file-apps '((auto-mode . emacs)
 			("\\.mm'" . default)
