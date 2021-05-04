@@ -399,33 +399,128 @@ The screenshot is saved as an attachment."
   (add-hook 'org-capture-mode-hook #'org-capture-turn-off-header-line-hook))
 
 (use-package org-ref
-  :ensure t
   :after org
   :config
   (setq reftex-default-bibliography '("~/journal/org/bibliografi.bib"))
-
   (setq org-ref-bibliography-notes "~/journal/org/bibliografi.org"
 	org-ref-default-bibliography '("~/journal/org/bibliografi.bib")
 	org-ref-pdf-directory "~/documents/")
-
-  (setq org-ref-completion-library 'org-ref-ivy-bibtex)
-  (setq org-ref-insert-cite-function 'org-ref-ivy-insert-cite-link)
-  (org-ref-ivy-cite-completion)
-
   (bibtex-set-dialect))  ; see https://emacs.stackexchange.com/questions/46691/initialization-of-bibtex-package2
 
 (use-package orgit
-  :ensure t
   :after (org magit))
-
-(use-package ob-shell
-  :after org)
 
 ;; Du finner relevante options her https://orgmode.org/manual/Publishing-options.html
 (use-package ox-publish
+  :ensure org
   :after org
   :config
+
+  ;;   (defun my-html-src-block (src-block contents info)
+  ;;       "Transcode a SRC-BLOCK element from Org to ASCII.
+  ;; CONTENTS is nil.  INFO is a plist used as a communication
+  ;; channel."
+  ;;   (if (not (org-export-read-attribute :attr_html src-block :skulpt))
+  ;;       (org-export-with-backend 'html src-block contents info)
+  ;;     (concat
+  ;;      (format ",--[ %s ]--\n%s`----"
+  ;;              (org-element-property :language src-block)
+  ;;              (replace-regexp-in-string
+  ;;               "^" "| "
+  ;;               (org-element-normalize-string
+  ;;                (org-export-format-code-default src-block info)))))))
+
+
+  ;; Vedrørende bruk av processing
+  ;; https://gist.github.com/s-cork/3397e26bc62e9d82a339372d1f613299
+  (defun skulpt-html-src-block (src-block contents info)
+    "Transcode a SRC-BLOCK element from Org to HTML.
+CONTENTS is nil.  INFO is a plist used as a communication
+channel."
+    (if (not (org-export-read-attribute :attr_html src-block :skulpt))
+	(org-export-with-backend 'html src-block contents info)
+      (concat
+       (format "<div class=\"%s\" id=\"%s\"><textarea id=\"%s\" cols=\"85\" rows=\"35\">\n%s</textarea>\n<a id=\"%s\">Kjør</a>
+<a id=\"%s\">Lagre</a>
+%s
+<pre id=\"%s\"></pre>%s</div>"
+	       "skulpt"
+	       (org-element-property :name src-block)
+	       (concat (org-element-property :name src-block) "-code")
+	       (org-element-normalize-string
+		(org-export-format-code-default src-block info))
+	       (concat (org-element-property :name src-block) "-run")
+	       (concat (org-element-property :name src-block) "-save")
+	       (if (org-export-read-attribute :attr_html src-block :turtle)
+		   (format "<a id=\"%s\">Figur</a>"
+			   (concat (org-element-property :name src-block) "-saveCanvas"))
+		 "")
+	       (concat (org-element-property :name src-block) "-output")
+	       (if (org-export-read-attribute :attr_html src-block :turtle)
+		   (format "<div id=\"%s\" height=\"600\" width=\"800\"></div>"
+			   (concat (org-element-property :name src-block) "-canvas"))
+		 "")))))
+
+  (org-export-define-derived-backend 'my-html 'html
+    :translate-alist '((src-block . skulpt-html-src-block)))
+
+  ;; (org-export-to-buffer 'my-html "*Org MY-HTML Export*")
+
+
+  ;; https://emacs.stackexchange.com/questions/27060/embed-image-as-base64-on-html-export-from-orgmode
+  (defun replace-in-string (what with in)
+    (replace-regexp-in-string (regexp-quote what) with in nil 'literal))
+
+  (defun org-html--format-image (source attributes info)
+    (progn
+      (setq source (replace-in-string "%20" " " source))
+      (format "<img src=\"data:image/%s;base64,%s\"%s />"
+	      (or (file-name-extension source) "")
+	      (base64-encode-string
+	       (with-temp-buffer
+		 (insert-file-contents-literally source)
+		 (buffer-string)))
+	      (file-name-nondirectory source))))
+
+  (defun my-org-html-publish-to-html (plist filename pub-dir)
+    "Publish an org file to HTML.
+
+FILENAME is the filename of the Org file to be published.  PLIST
+is the property list for the given project.  PUB-DIR is the
+publishing directory.
+
+Return output file name."
+    (org-publish-org-to 'my-html filename
+			(concat (when (> (length org-html-extension) 0) ".")
+				(or (plist-get plist :html-extension)
+				    org-html-extension
+				    "html"))
+			plist pub-dir))
+  
+  (defun konturer-publish-and-push (plist filename pub-dir)
+    (my-org-html-publish-to-html plist filename pub-dir)
+    (let ((default-directory "~/repos/tarjeiba.github.io"))
+      (shell-command "git add .")
+      (shell-command (format-time-string "git commit -m \"%Y%m%d-%H%M%S\""))
+      (shell-command "git push")))
+
   (setq org-html-head-include-default-style nil)
+
+  (setq konturer-html-preamble "<link rel=\"icon\" type=\"image/x-icon\" href=\"/promo/favicon.ico\">
+<link rel=\"stylesheet\" type=\"text/css\" href=\"/promo/stylesheet.css\">
+<link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Source Code Pro' rel='stylesheet'>
+<script src=\"https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.0.16/svg.min.js\" type=\"text/javascript\"></script>
+<script src=\"/js/skulpt.min.js\" type=\"text/javascript\"></script>   
+<script src=\"/js/skulpt-stdlib.js\" type=\"text/javascript\"></script>
+<script src=\"/js/editor.js\" type=\"text/javascript\"></script>       
+<script src=\"/js/codemirror_python.js\"></script>                   
+<script src=\"/js/codemirror.js\"></script>                          
+<link rel=\"stylesheet\" href=\"/css/codemirror.css\">                 
+<link rel=\"stylesheet\" media=\"screen\" href=\"/css/main.css\">                 
+<link rel=\"stylesheet\" media=\"print\" href=\"/css/print.css\">                 
+")
+
   (setq org-publish-project-alist
 	`(("promo"
 	   :base-directory ,promo-org-dir
