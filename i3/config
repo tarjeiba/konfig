@@ -4,12 +4,12 @@
 
 set $mod Mod4
 
-set $basefg		#ffffff
-set $basebg		#263238
-set $modeline		#1c1f26
-set $asefi		#b0bec5
-set $highlightorange	#ff9800
-set $varnameorange      #ffcc80
+set_from_resource $basefg foreground #ffffff
+set_from_resource $basebg background #263238
+set_from_resource $modeline background	#1c1f26
+set_from_resource $asefi color13 #b0bec5
+set_from_resource $highlightorange color14	#ff9800
+set_from_resource $varnameorange color7     #ffcc80
 
 font pango:System San Fransisco Display 14
 

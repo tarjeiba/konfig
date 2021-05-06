@@ -42,4 +42,4 @@ xsetwacom --set "Wacom Intuos BT Pen stylus" Button 2 "pan"
 xsetwacom --set "Wacom Intuos BT Pen stylus" "PanScrollThreshold" 100
 
 exec i3
-#exec emacs
+# exec emacs
