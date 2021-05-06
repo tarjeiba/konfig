@@ -15,10 +15,6 @@
 
 (customize-set-variable 'use-package-always-ensure t)
 
-;; (add-to-list 'load-path "~/repos/konfig/el/")
-;; ;; (add-to-list 'custom-theme-load-path "~/repos/konfig/el/")
-;; ;; (load-theme 'tb-material t nil)
-
 (setq vc-follow-symlinks t)
 (setq inhibit-x-resources t)
 
@@ -115,7 +111,6 @@
 
 (use-package all-the-icons)
 
-;; http://sodaware.sdf.org/notes/emacs-daemon-doom-modeline-icons/
 (defun enable-doom-modeline-icons (_frame)
   (setq doom-modeline-icon t))
 
@@ -173,14 +168,15 @@
 
 (use-package projectile
   :bind-keymap ("C-c p" . projectile-command-map)
-  :custom
-  (projectile-switch-project-action 'projectile-dired)
   :init
   (when (file-directory-p "~/repos")
     (setq projectile-project-search-path '("~/repos"))))
 
 (use-package counsel-projectile
-  :config (counsel-projectile-mode))
+  :custom
+  (counsel-projectile-switch-project-action 'counsel-projectile-switch-project-action-dired)
+  :config 
+  (counsel-projectile-mode))
 
 (use-package lsp-python-ms
   :after lsp
@@ -197,7 +193,7 @@
   (org-mode . visual-line-mode)
 
   :bind (("C-c l" . org-store-link)
-	 ("C-c c" . org-capture)
+	 ("C-c c" . counsel-org-capture)
 	 ("C-c a" . org-agenda)
 	 ("C-c C-x C-j" . org-clock-goto))
   :custom 
@@ -430,8 +426,6 @@
 			 (insert-file-contents tempfile)
 			 (buffer-string))))))
 
-  ;; Set according to
-  ;; https://stackoverflow.com/questions/55992844/how-to-integrate-an-image-set-via-local-path-in-the-exported-html-in-emacs
   (defun org-html--format-image (source attributes info)
     (format "<img src=\"data:image/%s;base64,%s\"%s />"
 	    (or (file-name-extension source) "")
@@ -543,23 +537,6 @@ The screenshot is saved as an attachment."
   :after org
   :config
 
-  ;;   (defun my-html-src-block (src-block contents info)
-  ;;       "Transcode a SRC-BLOCK element from Org to ASCII.
-  ;; CONTENTS is nil.  INFO is a plist used as a communication
-  ;; channel."
-  ;;   (if (not (org-export-read-attribute :attr_html src-block :skulpt))
-  ;;       (org-export-with-backend 'html src-block contents info)
-  ;;     (concat
-  ;;      (format ",--[ %s ]--\n%s`----"
-  ;;              (org-element-property :language src-block)
-  ;;              (replace-regexp-in-string
-  ;;               "^" "| "
-  ;;               (org-element-normalize-string
-  ;;                (org-export-format-code-default src-block info)))))))
-
-
-  ;; Vedrørende bruk av processing
-  ;; https://gist.github.com/s-cork/3397e26bc62e9d82a339372d1f613299
   (defun skulpt-html-src-block (src-block contents info)
     "Transcode a SRC-BLOCK element from Org to HTML.
 CONTENTS is nil.  INFO is a plist used as a communication
@@ -591,10 +568,6 @@ channel."
   (org-export-define-derived-backend 'my-html 'html
     :translate-alist '((src-block . skulpt-html-src-block)))
 
-  ;; (org-export-to-buffer 'my-html "*Org MY-HTML Export*")
-
-
-  ;; https://emacs.stackexchange.com/questions/27060/embed-image-as-base64-on-html-export-from-orgmode
   (defun replace-in-string (what with in)
     (replace-regexp-in-string (regexp-quote what) with in nil 'literal))
 
