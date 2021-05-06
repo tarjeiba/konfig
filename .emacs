@@ -622,40 +622,7 @@ Return output file name."
 ")
 
   (setq org-publish-project-alist
-	`(("promo"
-	   :base-directory ,promo-org-dir
-	   :exclude-tags ("pdf" "noexport")
-	   :publishing-directory ,promo-pub-dir
-	   :publishing-function org-html-publish-to-html
-	   :recursive t
-	   :headline-levels 6
-	   :html-preamble "<link rel=\"icon\" type=\"image/x-icon\" href=\"/promo/favicon.ico\">
-<link rel=\"stylesheet\" type=\"text/css\" href=\"/promo/stylesheet.css\">
-<link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
-<link href='https://fonts.googleapis.com/css?family=Source Code Pro' rel='stylesheet'>"
-	   :auto-sitemap nil
-	   :exclude "tanker-og-todos.org\\|orgheader.org\\|orgheader_nojs.org\\|sitemap.org\\|README.org"
-	   :with-smart-quotes nil
-	   :with-emphasize t
-	   :with-special t
-	   :with-fixed-width t
-	   :with-timestamps t
-	   :preserve-breaks nil
-	   :with-sub-superscript nil
-	   :with-archived-trees nil
-	   :with-date nil
-	   :with-entities t
-	   :with-footnotes t
-	   :with-inline-tasks t
-	   :with-planning nil
-	   :with-priority nil
-	   :section-numbers nil
-	   :creator "<a href=\"http://www.gnu.org/software/emacs/\">Emacs</a> 26.3 (<a href=\"http://orgmode.org\">Org</a> mode 9.1.14)"
-	   :author "Tarjei Bærland"
-	   :email "tarjei.barland@osloskolen.no"
-	   :language "no")
-
-	  ("konturer-skisser"
+	`(("konturer-skisser"
 	   :auto-sitemap t
 	   :sitemap-filename "index.org"
 	   :sitemap-title "Skisser"
@@ -683,28 +650,6 @@ Return output file name."
 	   :base-extension "org"
 	   :publishing-directory "~/repos/tarjeiba.github.io/skisser"
 	   :publishing-function konturer-publish-and-push)
-
-	  ("skaperverkstedet"
-	   :base-directory ,skaperverkstedet-org-dir
-	   :base-extension "org"
-	   :exclude-tags ("noexport")
-	   :publishing-directory ,skaperverkstedet-pub-dir
-	   :publishing-function org-html-publish-to-html
-	   :recursive t
-	   :headline-levels 6
-	   :html-preamble skaperverkstedet-html-preamble
-	   :html-postamble skaperverkstedet-html-postamle
-	   :auto-sitemap t
-	   :sitemap-function skaperverkstedet-sitemap-function
-	   :sitemap-filename "_sitemap.org"
-	   :sitemap-title "Skaperverkstedet"
-	   :exclude "_opplastningsinfo.org\\|_timeplan.org")
-
-	  ("skaperverkstedet-static"
-	   :base-directory "~/repos/templates"
-	   :base-extension "css"
-	   :publishing-directory ,skaperverkstedet-pub-dir
-	   :publishing-function org-publish-attachment)
 
 	  ("konturer-org"
 	   :base-directory "~/repos/konturer/org"
