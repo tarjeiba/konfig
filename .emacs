@@ -696,10 +696,6 @@ Return output file name."
 	 "#+END_SRC\n"
 	 "#+END_CODEBLOCK"))
 
-  ;; https://svgjs.com/docs/3.0/getting-started/
-  ;; https://cdnjs.com/libraries/svg.js
-  ;; https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-js.html
-  ;; https://emacs.stackexchange.com/questions/28301/export-javascript-source-block-to-script-tag-in-html-when-exporting-org-file-to
   (defun tarjeiba-read-file-contents (filename)
     (with-temp-buffer
       (insert-file-contents filename)
