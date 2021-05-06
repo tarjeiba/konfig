@@ -147,7 +147,6 @@
 (use-package company-box
   :hook (company-mode . company-box-mode))
   
-
 (use-package ivy
   :bind (("C-x b" . ivy-switch-buffer)
 	 ("C-x 4 b" . ivy-switch-buffer-other-window))
@@ -197,6 +196,8 @@
 	 ("C-c a" . org-agenda)
 	 ("C-c C-x C-j" . org-clock-goto))
   :custom 
+  (org-id-link-to-org-use-id 'create-if-interactive)
+  (org-log-into-drawer t)
   (org-export-default-language "no")
   (org-footnote-section "Fotnoter")
   (org-clock-persist t)
@@ -526,17 +527,16 @@ The screenshot is saved as an attachment."
   (setq org-ref-bibliography-notes "~/journal/org/bibliografi.org"
 	org-ref-default-bibliography '("~/journal/org/bibliografi.bib")
 	org-ref-pdf-directory "~/documents/")
-  (bibtex-set-dialect))  ; see https://emacs.stackexchange.com/questions/46691/initialization-of-bibtex-package2
+  (bibtex-set-dialect))
 
 (use-package orgit
   :after (org magit))
 
-;; Du finner relevante options her https://orgmode.org/manual/Publishing-options.html
 (use-package ox-publish
   :ensure org
   :after org
   :config
-
+  ;; Du finner relevante options her https://orgmode.org/manual/Publishing-options.html
   (defun skulpt-html-src-block (src-block contents info)
     "Transcode a SRC-BLOCK element from Org to HTML.
 CONTENTS is nil.  INFO is a plist used as a communication
@@ -859,8 +859,6 @@ Return output file name."
    [default bold shadow italic underline bold bold-italic bold])
  '(ansi-color-names-vector
    '(vector "#ffffff" "#f36c60" "#8bc34a" "#fff59d" "#4dd0e1" "#b39ddb" "#81d4fa" "#263238"))
- '(custom-safe-themes
-   '("e6ff132edb1bfa0645e2ba032c44ce94a3bd3c15e3929cdf6c049802cf059a2a" "fce3524887a0994f8b9b047aef9cc4cc017c5a93a5fb1f84d300391fba313743" "2c49d6ac8c0bf19648c9d2eabec9b246d46cb94d83713eaae4f26b49a8183fc4" "95d0ed21bb0e919be7687a25ad59a1c2c8df78cbe98c9e369d44e65bfd65b167" "72e0b2fcc58a2bc2cfe588b27853f7dea7db6d2bda7d481e1e348b5a15f69a18" "bf511364b090a19300634da43adb41144180e3c7926a4b0097155a8b33c1f6f2" "a8ad2c75696c9b97b59372c92aec60fee9059b3e9dafb8888c5ce0b64362f584" "732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "fe5e8725280cd104da1ee0488d88f896628f509cd17ecfdf54741ba63d52eff1" "f3fb21a7e3695c47631c5c488b2c70fa488ea42ab2525460698a5df18e925d80" "b554a4750d2ed87c2ecf97eea9ef7ad4e413324e3b273632552ee2489bda74b5" "4b934e6ec7a295c1af3ea0a194d38b54a3b93e4edb8a9fe957ed12076bc32dce" "883f6d34c0bac676833397f4b4d9ef1f98df2b566fe95bddb1da88bb08fe7245" "1b1c04792dae7e9cebc27aa5aa3ba7516250b440364a8d08cc03aff566032387" "ee11d22f12ee5113edf2b81738d027125b9e38d926ee8f61ea577b47a1330233" "1a5f3ceefb834fad698866ce5606de03cd9a9af13e66b351b86d94367a305d7b" "bf798e9e8ff00d4bf2512597f36e5a135ce48e477ce88a0764cfb5d8104e8163" "c9ddf33b383e74dac7690255dd2c3dfa1961a8e8a1d20e401c6572febef61045" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default))
  '(doom-modeline-mode t)
  '(fci-rule-color "#37474f")
  '(fringe-mode 0 nil (fringe))
@@ -881,8 +879,6 @@ Return output file name."
 #+BEGIN_SRC %lang%switches%flags
 %body
 #+END_SRC")
- '(org-id-link-to-org-use-id 'create-if-interactive)
- '(org-log-into-drawer t)
  '(org-log-note-headings
    '((done . "CLOSING NOTE %t")
      (state . "State %-12s from %-12S %t")
@@ -900,16 +896,7 @@ Return output file name."
  '(safe-local-variable-values '((projectile-project-run-cmd . "ng serve --open")))
  '(send-mail-function 'smtpmail-send-it)
  '(tex-fontify-script nil)
- '(use-package-always-ensure t)
  '(vc-follow-symlinks t))
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(subscript ((t (:height tex-suscript-height))))
- '(tex-verbatim ((t (:background "dark grey")))))
 
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
