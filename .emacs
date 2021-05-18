@@ -6,24 +6,18 @@
       '(("melpa" . "https://melpa.org/packages/")
 	("gnu" . "https://elpa.gnu.org/packages/")
 	("org" . "http://orgmode.org/elpa/")))
-
 (unless package-archive-contents
   (package-refresh-contents))
-
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
-
 (customize-set-variable 'use-package-always-ensure t)
-
-(setq vc-follow-symlinks t)
-(setq inhibit-x-resources t)
 
 (add-to-list 'default-frame-alist '(internal-border-width . 30))
 (add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
 (add-to-list 'default-frame-alist '(font . "Source Code Pro-12"))
+(setenv "BASH_ENV" "$HOME/.bashrc")
 
 (setq-default fill-column 100)
-
 (setq recentf-max-menu-items 100
       recentf-max-saved-items 100
       inhibit-startup-screen t
