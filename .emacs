@@ -226,6 +226,13 @@
 		(js . t)))
 
 
+	     (add-to-list 'org-src-lang-modes '("inline-js" . javascript)) ;; js2 if you're fancy
+	     (defvar org-babel-default-header-args:inline-js
+	       '((:results . "html")
+		 (:exports . "results")))
+	     (defun org-babel-execute:inline-js (body _params)
+	       (format "<script type=\"text/javascript\">\n%s\n</script>" body))
+
 	     (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
 								  (:session . "py")
 								  (:tangle . "temp.py")
