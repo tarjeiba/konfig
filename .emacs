@@ -101,409 +101,409 @@
 (defun enable-doom-modeline-icons (_frame)
   (setq doom-modeline-icon t))
 
+(use-package exec-path-from-shell
+  :config
+  (when (daemonp)
+    (exec-path-from-shell-initialize)))
+
 (use-package jupyter
-	     :bind (("C-c C-v S" . jupyter-org-split-src-block)))
+  :bind (("C-c C-v S" . jupyter-org-split-src-block)))
 
 (use-package org
-	     :mode ("\\.org" . org-mode)
-	     :hook
-	     (org-mode . visual-line-mode)
+  :mode ("\\.org" . org-mode)
+  :hook
+  (org-mode . visual-line-mode)
+  :bind (("C-c l" . org-store-link)
+	 ("C-c c" . counsel-org-capture)
+	 ("C-c a" . org-agenda)
+	 ("C-c A" . org-agenda-list)
+	 ("C-c C-x C-j" . org-clock-goto)
+	 :map org-mode-map
+	 ("C-c n" . org-advance)
+	 ("C-c p" . org-retreat))
+  :custom
+  (org-id-link-to-org-use-id 'create-if-interactive)
+  (org-log-into-drawer t)
+  (org-export-default-language "no")
+  (org-footnote-section "Fotnoter")
+  (org-clock-persist t)
+  (org-confirm-babel-evaluate nil)
+  (org-indent-indentation-per-level 2)
+  (org-startup-indented t)
+  (org-image-actual-width nil)
+  (org-archive-file-header-format nil)
+  (org-archive-location "~/media/archive/%s_archive::")
+  (org-list-allow-alphabetical t)
+  (org-adapt-indentation nil)
+  (org-src-fontify-natively t)
+  (org-src-preserve-indentation t)
+  (org-src-tab-acts-natively t)
+  (org-edit-src-content-indentation 0)
+  (org-edit-src-turn-on-auto-save t)
+  (org-src-window-setup 'current-window)
+  (org-export-with-section-numbers nil)
+  (org-export-with-toc nil)
+  (org-export-coding-system 'utf-8)
+  (org-html-preamble nil)
+  (org-html-postamble nil)
+  (org-reverse-note-order t)
+  (org-agenda-skip-deadline-if-done t)
+  (org-agenda-skip-scheduled-if-done t)
+  (org-agenda-skip-timestamp-if-done t)
+  (org-agenda-window-setup 'current-window)
+  (org-refile-use-outline-path 'file)
+  (org-outline-path-complete-in-steps nil)
+  (org-todo-keywords
+   '((sequence "TODO" "|" "DONE" "CANCELED")
+     (sequence "." "PLANLAGT" "|" "AVHOLDT")))
+  (org-refile-targets '((nil . (:maxlevel . 2))
+			(org-agenda-files . (:maxlevel . 2))))
 
-	     :bind (("C-c l" . org-store-link)
-		    ("C-c c" . counsel-org-capture)
-		    ("C-c a" . org-agenda)
-		    ("C-c A" . org-agenda-list)
-		    ("C-c C-x C-j" . org-clock-goto)
-		    ("C-c s" . taba-org-screenshot))
-	     :custom 
-	     (org-id-link-to-org-use-id 'create-if-interactive)
-	     (org-log-into-drawer t)
-	     (org-export-default-language "no")
-	     (org-footnote-section "Fotnoter")
-	     (org-clock-persist t)
-	     (org-confirm-babel-evaluate nil)
-	     (org-indent-indentation-per-level 2)
-	     (org-startup-indented t)
-	     (org-image-actual-width nil)
-	     (org-archive-file-header-format nil)
-	     (org-archive-location "~/media/archive/%s_archive::")
-	     (org-list-allow-alphabetical t)
-	     (org-adapt-indentation nil)
-	     (org-src-fontify-natively t)
-	     (org-src-preserve-indentation t)
-	     (org-src-tab-acts-natively t)
-	     (org-edit-src-content-indentation 0)
-	     (org-edit-src-turn-on-auto-save t)
-	     (org-src-window-setup 'current-window)
-	     (org-export-with-section-numbers nil)
-	     (org-export-with-toc nil)
-	     (org-export-coding-system 'utf-8)
-	     (org-html-preamble nil)
-	     (org-html-postamble nil)
-	     (org-reverse-note-order t)
-	     (org-agenda-skip-deadline-if-done t)
-	     (org-agenda-skip-scheduled-if-done t)
-	     (org-agenda-skip-timestamp-if-done t)
-	     (org-agenda-window-setup 'current-window)
-	     (org-refile-use-outline-path 'file)
-	     (org-outline-path-complete-in-steps nil)
-	     (org-todo-keywords
-	      '((sequence "TODO" "|" "DONE" "CANCELED")
-		(sequence "." "PLANLAGT" "|" "AVHOLDT")))
-	     (org-refile-targets '((nil . (:maxlevel . 2))
-				   (org-agenda-files . (:maxlevel . 2))))
+  :config
+  (require 'org-loaddefs)
 
-	     :config
-	     (require 'org-loaddefs)
-	     
-	     (defun org-advance ()
-	       (interactive)
-	       (when (buffer-narrowed-p)
-		 (goto-char (point-min))
-		 (widen)
-		 (org-forward-heading-same-level 1))
-	       (org-narrow-to-subtree))
+  (defun org-advance ()
+    (interactive)
+    (when (buffer-narrowed-p)
+      (goto-char (point-min))
+      (widen)
+      (org-forward-heading-same-level 1))
+    (org-narrow-to-subtree))
 
-	     (defun org-retreat ()
-	       (interactive)
-	       (when (buffer-narrowed-p)
-		 (goto-char (point-min))
-		 (widen)
-		 (org-backward-heading-same-level 1))
-	       (org-narrow-to-subtree))
+  (defun org-retreat ()
+    (interactive)
+    (when (buffer-narrowed-p)
+      (goto-char (point-min))
+      (widen)
+      (org-backward-heading-same-level 1))
+    (org-narrow-to-subtree))
 
-	     (defconst org-journal-dir "~/journal/org")
-	     (defconst org-journal-file (concat org-journal-dir "/journal.org"))
-	     (defconst org-diary-file (concat org-journal-dir "/dagbok.org.gpg"))
-	     (defconst org-todo-file (concat org-journal-dir "/gjøremål.org"))
-	     (defconst org-worklog-file (concat org-journal-dir "/arbeidslogg.org"))
-	     (defconst promo-org-dir "~/munch/pmx")
-	     (defconst promo-pub-dir "~/munch/pmx")
-	     (defconst skaperverkstedet-org-dir "~/munch/skaperverkstedet/org")
-	     (defconst skaperverkstedet-pub-dir "~/munch/skaperverkstedet")
-	     (defconst org-promo-todo-file (concat  promo-org-dir "/pmx.org"))
+  (defconst org-journal-dir "~/journal/org")
+  (defconst org-journal-file (concat org-journal-dir "/journal.org"))
+  (defconst org-diary-file (concat org-journal-dir "/dagbok.org.gpg"))
+  (defconst org-todo-file (concat org-journal-dir "/gjøremål.org"))
+  (defconst org-worklog-file (concat org-journal-dir "/arbeidslogg.org"))
 
-	     (setq org-file-apps '((auto-mode . emacs)
-				   ("\\.mm'" . default)
-				   ("\\.x?html?\\'" . default)
-				   ("\\.pdf\\'" . "zathura %s")
-				   ("\\.pdf::\\([0-9]+\\)\\'" . "zathura -P %1 %s")
-				   ("\\.xopp" . "xournalpp %s")))
+  (setq org-file-apps '((auto-mode . emacs)
+			("\\.mm'" . default)
+			("\\.x?html?\\'" . default)
+			("\\.pdf\\'" . "zathura %s")
+			("\\.pdf::\\([0-9]+\\)\\'" . "zathura -P %1 %s")
+			("\\.xopp" . "xournalpp %s")))
 
-	     (setq holiday-bahai-holidays nil
-		   holiday-hebrew-holidays nil
-		   holiday-islamic-holidays nil
-		   holiday-oriental-holidays nil
-		   holiday-other-holidays nil
-		   holiday-local-holidays nil
-		   holiday-christian-holidays nil
-		   holiday-general-holidays nil
-		   holiday-solar-holidays nil)
+  (setq holiday-bahai-holidays nil
+	holiday-hebrew-holidays nil
+	holiday-islamic-holidays nil
+	holiday-oriental-holidays nil
+	holiday-other-holidays nil
+	holiday-local-holidays nil
+	holiday-christian-holidays nil
+	holiday-general-holidays nil
+	holiday-solar-holidays nil)
 
-	     (setq calendar-week-start-day 1
-		   calendar-day-name-array ["søndag" "mandag" "tirsdag" "onsdag" "torsdag" "fredag" "lørdag"]
-		   calendar-month-name-array ["januar" "februar" "mars" "april"
-					      "mai" "juni" "juli" "august"
-					      "september" "oktober" "november" "desember"]
-		   calendar-intermonth-text
-		   '(propertize
-		     (format "%2d"
-			     (car
-			      (calendar-iso-from-absolute
-			       (calendar-absolute-from-gregorian (list month day year)))))
-		     'font-lock-face 'font-lock-function-name-face))
+  (setq calendar-week-start-day 1
+	calendar-day-name-array ["søndag" "mandag" "tirsdag" "onsdag" "torsdag" "fredag" "lørdag"]
+	calendar-month-name-array ["januar" "februar" "mars" "april"
+				   "mai" "juni" "juli" "august"
+				   "september" "oktober" "november" "desember"]
+	calendar-intermonth-text
+	'(propertize
+	  (format "%2d"
+		  (car
+		   (calendar-iso-from-absolute
+		    (calendar-absolute-from-gregorian (list month day year)))))
+	  'font-lock-face 'font-lock-function-name-face))
 
-	     (require 'ob-js)
-	     (require 'ob-python)
-	     (require 'ob-shell)
-	     (org-babel-do-load-languages
-	      'org-babel-load-languages
-	      '((python . t)
-		(dot . t)
-		(emacs-lisp . t)
-		(jupyter . t)
-		(lilypond . t)
-		(js . t)))
+  (require 'ob-js)
+  (require 'ob-python)
+  (require 'ob-shell)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((python . t)
+     (dot . t)
+     (emacs-lisp . t)
+     (jupyter . t)
+     (lilypond . t)
+     (js . t)))
 
+  (add-to-list 'org-src-lang-modes '("inline-js" . javascript)) ;; js2 if you're fancy
+  (defvar org-babel-default-header-args:inline-js
+    '((:results . "html")
+      (:exports . "results")))
+  (defun org-babel-execute:inline-js (body _params)
+    (format "<script type=\"text/javascript\">\n%s\n</script>" body))
 
-	     (add-to-list 'org-src-lang-modes '("inline-js" . javascript)) ;; js2 if you're fancy
-	     (defvar org-babel-default-header-args:inline-js
-	       '((:results . "html")
-		 (:exports . "results")))
-	     (defun org-babel-execute:inline-js (body _params)
-	       (format "<script type=\"text/javascript\">\n%s\n</script>" body))
+  (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
+						       (:session . "py")
+						       (:tangle . "temp.py")
+						       (:kernel . "python3")
+						       (:eval . "never-export")
+						       (:exports . "both")))
 
-	     (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
-								  (:session . "py")
-								  (:tangle . "temp.py")
-								  (:kernel . "python3")
-								  (:eval . "never-export")
-								  (:exports . "both")))
+  (setq org-babel-min-lines-for-block-output 1)
 
-	     (setq org-babel-min-lines-for-block-output 1)
+  (add-to-list 'org-structure-template-alist '("p" . "src python"))
+  (add-to-list 'org-structure-template-alist '("b" . "src bibtex"))
+  (add-to-list 'org-structure-template-alist '("t" . "task"))
+  (add-to-list 'org-modules 'org-habit t)
 
-	     (add-to-list 'org-structure-template-alist '("p" . "src python"))
-	     (add-to-list 'org-structure-template-alist '("b" . "src bibtex"))
-	     (add-to-list 'org-structure-template-alist '("t" . "task"))
-	     (add-to-list 'org-modules 'org-habit t)
+  (setq python-indent-guess-indent-offset-verbose nil)
 
-	     (setq python-indent-guess-indent-offset-verbose nil)
+  (org-link-set-parameters
+   "ggb"
+   :follow (lambda (path)
+	     (message (format "%s" path)))
+   :export (lambda (path desc backend)
+	     (cond
+	      ((eq backend 'html)
+	       (format "<a href=\"ggb/%s\">%s</a>" path (or desc path))))))
 
-	     (org-link-set-parameters
-	      "ggb"
-	      :follow (lambda (path)
-			(message (format "%s" path)))
-	      :export (lambda (path desc backend)
-			(cond
-			 ((eq backend 'html)
-			  (format "<a href=\"ggb/%s\">%s</a>" path (or desc path))))))
+  (org-link-set-parameters
+   "zip"
+   :follow (lambda (path)
+	     (message (format "%s" path)))
+   :export (lambda (path desc backend)
+	     (cond
+	      ((eq backend 'html)
+	       (format "<a href=\"zip/%s\">%s</a>" path (or desc path))))))
 
-	     (org-link-set-parameters
-	      "zip"
-	      :follow (lambda (path)
-			(message (format "%s" path)))
-	      :export (lambda (path desc backend)
-			(cond
-			 ((eq backend 'html)
-			  (format "<a href=\"zip/%s\">%s</a>" path (or desc path))))))
+  (org-link-set-parameters
+   "py"
+   :follow (lambda (path)
+	     (org-open-file
+	      (format "../../py/%s" path)))
+   :export (lambda (path desc backend)
+	     (cond
+	      ((eq backend 'html)
+	       (format "<a href=\"/py/%s\">%s</a>" path (or desc path))))))
 
-	     (org-link-set-parameters
-	      "py"
-	      :follow (lambda (path)
-			(org-open-file
-			 (format "../../py/%s" path)))
-	      :export (lambda (path desc backend)
-			(cond
-			 ((eq backend 'html)
-			  (format "<a href=\"/py/%s\">%s</a>" path (or desc path))))))
+  (org-link-set-parameters
+   "pdf"
+   :follow (lambda (path)
+	     (shell-command
+	      (format "zathura ../pdf/%s &" path)))
+   :export (lambda (path desc backend)
+	     (cond
+	      ((eq backend 'html)
+	       (format "<a href=\"pdf/%s\">%s</a>" path (or desc path))))))
 
-	     (org-link-set-parameters
-	      "pdf"
-	      :follow (lambda (path)
-			(shell-command
-			 (format "zathura ../pdf/%s &" path)))
-	      :export (lambda (path desc backend)
-			(cond
-			 ((eq backend 'html)
-			  (format "<a href=\"pdf/%s\">%s</a>" path (or desc path))))))
+  (org-link-set-parameters
+   "data"
+   :follow (lambda (path)
+	     (org-open-file-with-emacs
+	      (format "../data/%s" path)))
+   :export (lambda (path desc backend)
+	     (cond
+	      ((eq backend 'html)
+	       (format "<a href=\"data/%s\">%s</a>" path (or desc path))))))
 
-	     (org-link-set-parameters
-	      "data"
-	      :follow (lambda (path)
-			(org-open-file-with-emacs
-			 (format "../data/%s" path)))
-	      :export (lambda (path desc backend)
-			(cond
-			 ((eq backend 'html)
-			  (format "<a href=\"data/%s\">%s</a>" path (or desc path))))))
+  (org-link-set-parameters
+   "fig"
+   :follow (lambda (path)
+	     (org-open-file-with-emacs
+	      (format "../figurer/%s" path)))
+   :export 'taba-org-export-html)
 
-	     (org-link-set-parameters
-	      "fig"
-	      :follow (lambda (path)
-			(org-open-file-with-emacs
-			 (format "../figurer/%s" path)))
-	      :export 'taba-org-export-html)
+  (org-link-set-parameters
+   "pres"
+   :follow (lambda (path)
+	     (shell-command
+	      (format "evince -s ../pdf/%s &" path)))
+   :export (lambda (path desc backend)
+	     (cond
+	      ((eq backend 'html)
+	       (format "<a href=\"pdf/%s\">%s</a>" path (or desc path))))))
 
-	     (org-link-set-parameters
-	      "pres"
-	      :follow (lambda (path)
-			(shell-command
-			 (format "evince -s ../pdf/%s &" path)))
-	      :export (lambda (path desc backend)
-			(cond
-			 ((eq backend 'html)
-			  (format "<a href=\"pdf/%s\">%s</a>" path (or desc path))))))
-
-	     (org-link-set-parameters
-	      "yt"
-	      :follow (lambda (path)
-			(shell-command
-			 (format "chromium https://www.youtube.com/watch?v=%s" path)))
-	      :export (lambda (path desc backend)
-			(cond
-			 ((eq backend 'html)
-			  (format "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/%s\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>" path (or desc path))))))
+  (org-link-set-parameters
+   "yt"
+   :follow (lambda (path)
+	     (shell-command
+	      (format "chromium https://www.youtube.com/watch?v=%s" path)))
+   :export (lambda (path desc backend)
+	     (cond
+	      ((eq backend 'html)
+	       (format "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/%s\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>" path (or desc path))))))
 
 
-	     (org-link-set-parameters
-	      "inkscape"
-	      :follow (lambda (path)
-			(shell-command
-			 (format "inkscape ../inkscape/%s &" path)))
-	      :export (lambda (path desc backend)
-			(async-shell-command (format "inkscape --export-plain-svg --export-filename=../svg/%s ../inkscape/%s" path path))
-			(format "<figure>\n<img src=\"/svg/%s\"></figure>" path)))
+  (org-link-set-parameters
+   "inkscape"
+   :follow (lambda (path)
+	     (shell-command
+	      (format "inkscape ../inkscape/%s &" path)))
+   :export (lambda (path desc backend)
+	     (async-shell-command (format "inkscape --export-plain-svg --export-filename=../svg/%s ../inkscape/%s" path path))
+	     (format "<figure>\n<img src=\"/svg/%s\"></figure>" path)))
 
-	     (org-link-set-parameters
-	      "xopp"
-	      :follow (lambda (path)
-			(let ((xoppfile (format "/home/tarjei/repos/konturer/xopp/%s" path))
-			      (template "/home/tarjei/repos/konturer/maler/skisse.xopp"))
-			  (cond ((not (file-exists-p xoppfile))
-				 (copy-file template xoppfile)))
-			  (async-shell-command
-			   (format "xournalpp %s" xoppfile))))
-	      :export (lambda (path desc backend)
-			(let ((xoppfile (format "/home/tarjei/repos/konturer/xopp/%s" path))
-			      (tempfile "/home/tarjei/temp/xournal_export.svg"))
-			  (delete-file tempfile)
-			  (message "deleted file")
-			  (shell-command (format "xournalpp --create-img %s %s" tempfile xoppfile))
-			  (format "<figure>\n%s\n</figure>"
-				  (with-temp-buffer
-				    (insert-file-contents tempfile)
-				    (buffer-string))))))
+  (org-link-set-parameters
+   "xopp"
+   :follow (lambda (path)
+	     (let ((xoppfile (format "/home/tarjei/repos/konturer/xopp/%s" path))
+		   (template "/home/tarjei/repos/konturer/maler/skisse.xopp"))
+	       (cond ((not (file-exists-p xoppfile))
+		      (copy-file template xoppfile)))
+	       (async-shell-command
+		(format "xournalpp %s" xoppfile))))
+   :export (lambda (path desc backend)
+	     (let ((xoppfile (format "/home/tarjei/repos/konturer/xopp/%s" path))
+		   (tempfile "/home/tarjei/temp/xournal_export.svg"))
+	       (delete-file tempfile)
+	       (message "deleted file")
+	       (shell-command (format "xournalpp --create-img %s %s" tempfile xoppfile))
+	       (format "<figure>\n%s\n</figure>"
+		       (with-temp-buffer
+			 (insert-file-contents tempfile)
+			 (buffer-string))))))
 
-	     (defun org-html--format-image (source attributes info)
-	       (format "<img src=\"data:image/%s;base64,%s\"%s />"
-		       (or (file-name-extension source) "")
-		       (base64-encode-string
-			(with-temp-buffer
-			  (insert-file-contents-literally source)
-			  (buffer-string)))
-		       (file-name-nondirectory source)))
+  (defun org-html--format-image (source attributes info)
+    (format "<img src=\"data:image/%s;base64,%s\"%s />"
+	    (or (file-name-extension source) "")
+	    (base64-encode-string
+	     (with-temp-buffer
+	       (insert-file-contents-literally source)
+	       (buffer-string)))
+	    (file-name-nondirectory source)))
 
-	     (org-link-set-parameters
-	      "xournalpp"
-	      :follow (lambda (path)
-			(let ((xoppfile (concat (org-attach-dir-get-create) "/" path))
-			      (template "/home/tarjei/repos/konturer/maler/skisse.xopp"))
-			  (cond ((not (file-exists-p xoppfile)) (copy-file template xoppfile)))
-			  (org-attach-sync)
-			  (shell-command (format "xournalpp %s" xoppfile))))
-	      :export (lambda (path desc backend)
-			(org-attach-sync)
-			(let ((xoppfile (concat (org-attach-dir-get-create) "/" path))
-			      (tempfile "/home/tarjei/temp/xournal_export.svg"))
-			  (shell-command (format "xournalpp --create-img %s %s" tempfile xoppfile))
-			  (with-temp-buffer
-			    (insert-file tempfile)p
-			    (buffer-string)))))
+  (org-link-set-parameters
+   "xournalpp"
+   :follow (lambda (path)
+	     (let ((xoppfile (concat (org-attach-dir-get-create) "/" path))
+		   (template "/home/tarjei/repos/konturer/maler/skisse.xopp"))
+	       (cond ((not (file-exists-p xoppfile)) (copy-file template xoppfile)))
+	       (org-attach-sync)
+	       (shell-command (format "xournalpp %s" xoppfile))))
+   :export (lambda (path desc backend)
+	     (org-attach-sync)
+	     (let ((xoppfile (concat (org-attach-dir-get-create) "/" path))
+		   (tempfile "/home/tarjei/temp/xournal_export.svg"))
+	       (shell-command (format "xournalpp --create-img %s %s" tempfile xoppfile))
+	       (with-temp-buffer
+		 (insert-file tempfile)p
+		 (buffer-string)))))
 
-	     (setq org-agenda-custom-commands
-		   '(("h" "Agenda og hjemme"
-		      ((agenda "" ((org-agenda-span 14)
-				   (org-deadline-warning-days 14)
-				   (org-agenda-prefix-format "")
-				   (org-agenda-filter-preset '("-jobb"))))))
-		     ("j" "Jobb i dag og i morra"
-		      ((agenda "" ((org-agenda-span 2)
-				   (org-agenda-filter-preset '("+jobb"))
-				   (org-agenda-prefix-format "%t ")))
-		       (todo "TODO" ((org-agenda-filter-preset '("+jobb"))
-				     (org-agenda-max-entries 0)))))))
+  (setq org-agenda-custom-commands
+	'(("h" "Agenda og hjemme"
+	   ((agenda "" ((org-agenda-span 14)
+			(org-deadline-warning-days 14)
+			(org-agenda-prefix-format "")
+			(org-agenda-filter-preset '("-jobb"))))))
+	  ("j" "Jobb i dag og i morra"
+	   ((agenda "" ((org-agenda-span 2)
+			(org-agenda-filter-preset '("+jobb"))
+			(org-agenda-prefix-format "%t ")))
+	    (todo "TODO" ((org-agenda-filter-preset '("+jobb"))
+			  (org-agenda-max-entries 0)))))))
 
-	     (setq org-attach-expert t)
-	     (defun taba-org-screenshot ()
-	       "Take a screenshot into a time-stamped uniquely named file
+  (setq org-attach-expert t)
+  (defun taba-org-screenshot ()
+    "Take a screenshot into a time-stamped uniquely named file
 
 The screenshot is saved as an attachment."
-	       (interactive)
-	       (let* ((folder "/tmp/")
-		      (filename (concat "screenshot_"
-					(format-time-string "%Y%m%d_%H%M%S")
-					".png"))
-		      (fullname (concat folder filename)))
-		 (call-process "import" nil nil nil fullname)
-		 (org-attach-attach fullname nil 'mv)))
+    (interactive)
+    (let* ((folder "/tmp/")
+	   (filename (concat "screenshot_"
+			     (format-time-string "%Y%m%d_%H%M%S")
+			     ".png"))
+	   (fullname (concat folder filename)))
+      (call-process "import" nil nil nil fullname)
+      (org-attach-attach fullname nil 'mv)))
 
-	     (setq org-capture-templates
-		   `(("a" "Avtale" entry
-		      (file+headline org-todo-file "Avtaler")
-		      "* %^{Avtale} %^G\n%^T\n%?\n"
-		      :empty-lines 1 :immediate-finish t)
-		     ("g" "Gjøremål generelt" entry
-		      (file+headline org-todo-file "Gjøremål")
-		      "* TODO %?\n%T\n"
-		      :empty-lines 1)
-		     ("j" "Journal" entry
-		      (file+olp+datetree org-journal-file "Journal")
-		      "* %^{Tema} %^g\n%i\n%?\n\nSkrevet %U."
-		      :empty-lines 1 :immediate-finish t :jump-to-captured t)
-		     ("d" "Dagbok" entry
-		      (file org-diary-file)
-		      "* %<%d.%m.%Y> -- %?\n\n"
-		      :empty-lines 1)
-		     ))
+  (setq org-capture-templates
+	`(("a" "Avtale" entry
+	   (file+headline org-todo-file "Avtaler")
+	   "* %^{Avtale} %^G\n%^T\n%?\n"
+	   :empty-lines 1 :immediate-finish t)
+	  ("g" "Gjøremål generelt" entry
+	   (file+headline org-todo-file "Gjøremål")
+	   "* TODO %?\n%T\n"
+	   :empty-lines 1)
+	  ("j" "Journal" entry
+	   (file+olp+datetree org-journal-file "Journal")
+	   "* %^{Tema} %^g\n%i\n%?\n\nSkrevet %U."
+	   :empty-lines 1 :immediate-finish t :jump-to-captured t)
+	  ("d" "Dagbok" entry
+	   (file org-diary-file)
+	   "* %<%d.%m.%Y> -- %?\n\n"
+	   :empty-lines 1)
+	  ))
 
-	     (defun org-capture-turn-off-header-line-hook ()
-	       (setq-local header-line-format nil))
+  (defun org-capture-turn-off-header-line-hook ()
+    (setq-local header-line-format nil))
 
-	     (add-hook 'org-capture-mode-hook 'delete-other-windows)
-	     (add-hook 'org-capture-mode-hook #'org-capture-turn-off-header-line-hook)
+  (add-hook 'org-capture-mode-hook 'delete-other-windows)
+  (add-hook 'org-capture-mode-hook #'org-capture-turn-off-header-line-hook)
 
 
-	     (defun skulpt-html-src-block (src-block contents info)
-	       "Transcode a SRC-BLOCK element from Org to HTML.
+  (defun skulpt-html-src-block (src-block contents info)
+    "Transcode a SRC-BLOCK element from Org to HTML.
 CONTENTS is nil.  INFO is a plist used as a communication
 channel."
-	       (if (not (org-export-read-attribute :attr_html src-block :skulpt))
-		   (org-export-with-backend 'html src-block contents info)
-		 (concat
-		  (format "<div class=\"%s\" id=\"%s\"><textarea id=\"%s\" cols=\"85\" rows=\"35\">\n%s</textarea>\n<a id=\"%s\">Kjør</a>
+    (if (not (org-export-read-attribute :attr_html src-block :skulpt))
+	(org-export-with-backend 'html src-block contents info)
+      (concat
+       (format "<div class=\"%s\" id=\"%s\"><textarea id=\"%s\" cols=\"85\" rows=\"35\">\n%s</textarea>\n<a id=\"%s\">Kjør</a>
 <a id=\"%s\">Lagre</a>
 %s
 <pre id=\"%s\"></pre>%s</div>"
-			  "skulpt"
-			  (org-element-property :name src-block)
-			  (concat (org-element-property :name src-block) "-code")
-			  (org-element-normalize-string
-			   (org-export-format-code-default src-block info))
-			  (concat (org-element-property :name src-block) "-run")
-			  (concat (org-element-property :name src-block) "-save")
-			  (if (org-export-read-attribute :attr_html src-block :turtle)
-			      (format "<a id=\"%s\">Figur</a>"
-				      (concat (org-element-property :name src-block) "-saveCanvas"))
-			    "")
-			  (concat (org-element-property :name src-block) "-output")
-			  (if (org-export-read-attribute :attr_html src-block :turtle)
-			      (format "<div id=\"%s\" height=\"600\" width=\"800\"></div>"
-				      (concat (org-element-property :name src-block) "-canvas"))
-			    "")))))
+	       "skulpt"
+	       (org-element-property :name src-block)
+	       (concat (org-element-property :name src-block) "-code")
+	       (org-element-normalize-string
+		(org-export-format-code-default src-block info))
+	       (concat (org-element-property :name src-block) "-run")
+	       (concat (org-element-property :name src-block) "-save")
+	       (if (org-export-read-attribute :attr_html src-block :turtle)
+		   (format "<a id=\"%s\">Figur</a>"
+			   (concat (org-element-property :name src-block) "-saveCanvas"))
+		 "")
+	       (concat (org-element-property :name src-block) "-output")
+	       (if (org-export-read-attribute :attr_html src-block :turtle)
+		   (format "<div id=\"%s\" height=\"600\" width=\"800\"></div>"
+			   (concat (org-element-property :name src-block) "-canvas"))
+		 "")))))
 
-	     (require 'ox)
-	     (org-export-define-derived-backend 'my-html 'html
-						:translate-alist '((src-block . skulpt-html-src-block)))
+  (require 'ox)
+  (org-export-define-derived-backend 'my-html 'html
+    :translate-alist '((src-block . skulpt-html-src-block)))
 
-	     (defun replace-in-string (what with in)
-	       (replace-regexp-in-string (regexp-quote what) with in nil 'literal))
+  (defun replace-in-string (what with in)
+    (replace-regexp-in-string (regexp-quote what) with in nil 'literal))
 
-	     (defun org-html--format-image (source attributes info)
-	       (progn
-		 (setq source (replace-in-string "%20" " " source))
-		 (format "<img src=\"data:image/%s;base64,%s\"%s />"
-			 (or (file-name-extension source) "")
-			 (base64-encode-string
-			  (with-temp-buffer
-			    (insert-file-contents-literally source)
-			    (buffer-string)))
-			 (file-name-nondirectory source))))
+  (defun org-html--format-image (source attributes info)
+    (progn
+      (setq source (replace-in-string "%20" " " source))
+      (format "<img src=\"data:image/%s;base64,%s\"%s />"
+	      (or (file-name-extension source) "")
+	      (base64-encode-string
+	       (with-temp-buffer
+		 (insert-file-contents-literally source)
+		 (buffer-string)))
+	      (file-name-nondirectory source))))
 
-	     (defun my-org-html-publish-to-html (plist filename pub-dir)
-	       "Publish an org file to HTML.
+  (defun my-org-html-publish-to-html (plist filename pub-dir)
+    "Publish an org file to HTML.
 
 FILENAME is the filename of the Org file to be published.  PLIST
 is the property list for the given project.  PUB-DIR is the
 publishing directory.
 
 Return output file name."
-	       (org-publish-org-to 'my-html filename
-				   (concat (when (> (length org-html-extension) 0) ".")
-					   (or (plist-get plist :html-extension)
-					       org-html-extension
-					       "html"))
-				   plist pub-dir))
-	     
-	     (defun konturer-publish-and-push (plist filename pub-dir)
-	       (my-org-html-publish-to-html plist filename pub-dir)
-	       (let ((default-directory "~/repos/tarjeiba.github.io"))
-		 (shell-command "git add .")
-		 (shell-command (format-time-string "git commit -m \"%Y%m%d-%H%M%S\""))
-		 (shell-command "git push")))
+    (org-publish-org-to 'my-html filename
+			(concat (when (> (length org-html-extension) 0) ".")
+				(or (plist-get plist :html-extension)
+				    org-html-extension
+				    "html"))
+			plist pub-dir))
+  
+  (defun konturer-publish-and-push (plist filename pub-dir)
+    (my-org-html-publish-to-html plist filename pub-dir)
+    (let ((default-directory "~/repos/tarjeiba.github.io"))
+      (shell-command "git add .")
+      (shell-command (format-time-string "git commit -m \"%Y%m%d-%H%M%S\""))
+      (shell-command "git push")))
 
-	     (setq org-html-head-include-default-style nil)
+  (setq org-html-head-include-default-style nil)
 
-	     (setq konturer-html-preamble "
+  (setq konturer-html-preamble "
 <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
 <link href='https://fonts.googleapis.com/css?family=Source Code Pro' rel='stylesheet'>
 <script src=\"https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.0.16/svg.min.js\" type=\"text/javascript\"></script>
@@ -865,19 +865,20 @@ Return output file name."
  '(ansi-color-names-vector
    '(vector "#ffffff" "#f36c60" "#8bc34a" "#fff59d" "#4dd0e1" "#b39ddb" "#81d4fa" "#263238"))
  '(doom-modeline-mode t)
+ '(elfeed-feeds '("https://ciechanow.ski/atom.xml"))
  '(fci-rule-color "#37474f")
  '(fringe-mode 0 nil (fringe))
  '(gnus-group-tool-bar 'gnus-group-tool-bar-gnome)
  '(grep-find-ignored-directories
    '("SCCS" "RCS" "CVS" "MCVS" ".src" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "dist"))
  '(ledger-reports
-   '(("bal" "ledger [[ledger-mode-flags]] -f /home/tarjei/journal/pengejournal.dat bal")
+   '(("bal" "ledger [[ledger-mode-flags]] -f /home/tarjei/journal/pengejournal.dat bal --cleared")
      ("reg" "%(binary) -f %(ledger-file) reg")
      ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
      ("account" "%(binary) -f %(ledger-file) reg %(account)")))
  '(org-agenda-diary-file "~/journal/org/dagbok.org.gpg")
  '(org-agenda-files
-   '("~/repos/konturer/battleships/battleships.org" "~/kikora/oppgaver.org" "~/repos/konturer/org/skisser/20210412a.org" "~/repos/konturer/org/sir-modellen.org" "~/repos/konturer/org/index.org" "~/journal/org/journal.org" "~/munch/tekfors/tekfors.org" "~/munch/r2/minitester/minitest11.org" "~/munch/pmx/oppgaver/index.org" "~/munch/pmx/fysikkmotor/fysikkmotor.org" "~/journal/org/bibliografi.org" "~/journal/org/jensbjelkes.org" "~/journal/org/fjellgata.org" "~/munch/skaperverkstedet/skaperverkstedet.org" "~/munch/r2/r2.org" "~/munch/pmx/pmx.org" "~/kikora/kikora.org" "~/munch/munch.org" "~/journal/org/arbeidsflyt.org" "~/journal/org/gjøremål.org" "~/journal/org/merkedager.org"))
+   '("/home/tarjei/repos/konturer/battleships/battleships.org" "/home/tarjei/kikora/oppgaver.org" "/home/tarjei/repos/konturer/org/skisser/20210412a.org" "/home/tarjei/repos/konturer/org/sir-modellen.org" "/home/tarjei/repos/konturer/org/index.org" "/home/tarjei/journal/org/journal.org" "/home/tarjei/journal/org/bibliografi.org" "/home/tarjei/journal/org/jensbjelkes.org" "/home/tarjei/journal/org/fjellgata.org" "/home/tarjei/kikora/kikora.org" "/home/tarjei/journal/org/arbeidsflyt.org" "/home/tarjei/journal/org/gjøremål.org" "/home/tarjei/journal/org/merkedager.org"))
  '(org-log-note-headings
    '((done . "CLOSING NOTE %t")
      (state . "State %-12s from %-12S %t")
