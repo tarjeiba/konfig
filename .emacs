@@ -391,7 +391,15 @@
 			(org-agenda-filter-preset '("+jobb"))
 			(org-agenda-prefix-format "%t ")))
 	    (todo "TODO" ((org-agenda-filter-preset '("+jobb"))
-			  (org-agenda-max-entries 0)))))))
+			  (org-agenda-max-entries nil)))))))
+
+  (advice-add 'org-agenda-goto :after
+	      (lambda (&rest args)
+		(org-narrow-to-subtree)))
+
+  (advice-add 'org-agenda-switch-to :after
+	      (lambda (&rest args)
+		(org-narrow-to-subtree)))
 
   (setq org-attach-expert t)
   (defun taba-org-screenshot ()
